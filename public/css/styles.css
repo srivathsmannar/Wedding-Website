@@ -667,8 +667,6 @@ section { padding: 6rem 2rem; }
 }
 
 /* Credit card badge */
-.fund-pay-card { background: #6B4FA0; color: var(--white); border-color: #6B4FA0; }
-.fund-pay-card:hover { background: #57408A; border-color: #57408A; }
 
 /* Card payment modal extras */
 .card-fee-warning {
