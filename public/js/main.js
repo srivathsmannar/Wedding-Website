@@ -8,6 +8,9 @@ document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
     const fund   = btn.dataset.fund;
     const method = btn.dataset.method;
 
+    closePaymentModal();
+    closeCardModal();
+
     if (method === 'venmo') {
       const note     = encodeURIComponent(fund);
       const deepLink = `venmo://paycharge?txn=pay&recipients=srivathsmannar&note=${note}`;
