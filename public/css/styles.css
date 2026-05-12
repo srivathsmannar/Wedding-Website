@@ -633,6 +633,7 @@ section { padding: 6rem 2rem; }
 .payment-modal-close:hover { color: var(--text-dark); }
 .payment-modal-method {
   font-size: 0.62rem;
+  font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--teal);
