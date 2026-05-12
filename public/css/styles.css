@@ -666,6 +666,31 @@ section { padding: 6rem 2rem; }
   line-height: 1.6;
 }
 
+/* Credit card badge */
+.fund-pay-card { color: var(--text-light); border-color: rgba(92, 61, 46, 0.18); }
+.fund-pay-card:hover { background: var(--text-dark); color: var(--white); border-color: var(--text-dark); }
+
+/* Card payment modal extras */
+.card-fee-warning {
+  background: rgba(198, 150, 58, 0.08);
+  border: 1px solid rgba(198, 150, 58, 0.3);
+  padding: 0.8rem 1rem;
+  font-size: 0.82rem;
+  color: var(--text-medium);
+  line-height: 1.65;
+  text-align: left;
+}
+.card-amount-group { margin-top: 1.25rem; text-align: left; }
+.card-amount-group .form-label { margin-bottom: 0.4rem; }
+.card-fee-calc {
+  font-size: 0.8rem;
+  color: var(--teal);
+  text-align: left;
+  margin-top: 0.5rem;
+  min-height: 1.2em;
+}
+.card-checkout-btn { margin-top: 1.25rem; }
+
 /* === RSVP === */
 .rsvp {
   background:
@@ -829,6 +854,28 @@ section { padding: 6rem 2rem; }
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.35);
 }
+
+/* === PAYMENT SUCCESS TOAST === */
+.payment-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--text-dark);
+  color: var(--light-gold);
+  padding: 1rem 1.75rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  z-index: 3000;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: var(--shadow-md);
+}
+.payment-toast.toast-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* === FADE-UP ANIMATION === */
 .fade-up {

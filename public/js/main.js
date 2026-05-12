@@ -26,11 +26,86 @@ document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
 
 document.getElementById('modalClose').addEventListener('click', closePaymentModal);
 paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePaymentModal(); });
 
 function closePaymentModal() {
   paymentModal.classList.remove('open');
   document.body.style.overflow = '';
+}
+
+/* === CARD PAYMENT MODAL === */
+const cardModal       = document.getElementById('cardModal');
+const cardModalFund   = document.getElementById('cardModalFund');
+const cardAmountInput = document.getElementById('cardAmount');
+const cardFeeCalc     = document.getElementById('cardFeeCalc');
+const cardCheckoutBtn = document.getElementById('cardCheckoutBtn');
+let currentCardFund   = '';
+
+document.querySelectorAll('.fund-pay-btn[data-method="card"]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    currentCardFund = btn.dataset.fund;
+    cardModalFund.textContent = currentCardFund;
+    cardAmountInput.value = '';
+    cardFeeCalc.textContent = '';
+    cardCheckoutBtn.disabled = true;
+    cardModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+cardAmountInput.addEventListener('input', () => {
+  const amount = parseFloat(cardAmountInput.value);
+  if (!amount || amount < 1) { cardFeeCalc.textContent = ''; cardCheckoutBtn.disabled = true; return; }
+  const fee      = (amount * 0.029 + 0.30).toFixed(2);
+  const received = (amount - fee).toFixed(2);
+  cardFeeCalc.textContent = `You give $${amount.toFixed(2)} · We receive ~$${received}`;
+  cardCheckoutBtn.disabled = false;
+});
+
+cardCheckoutBtn.addEventListener('click', async () => {
+  const amount = parseFloat(cardAmountInput.value);
+  if (!amount || amount < 1) return;
+  cardCheckoutBtn.disabled = true;
+  cardCheckoutBtn.textContent = 'Redirecting…';
+  try {
+    const res  = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fund: currentCardFund, amount }),
+    });
+    const data = await res.json();
+    if (data.url) { window.location.href = data.url; }
+    else { alert('Something went wrong. Please try again.'); resetCardBtn(); }
+  } catch { alert('Network error. Please try again.'); resetCardBtn(); }
+});
+
+function resetCardBtn() {
+  cardCheckoutBtn.disabled = false;
+  cardCheckoutBtn.textContent = 'Continue to Checkout';
+}
+
+document.getElementById('cardModalClose').addEventListener('click', closeCardModal);
+cardModal.addEventListener('click', (e) => { if (e.target === cardModal) closeCardModal(); });
+
+function closeCardModal() {
+  cardModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closePaymentModal(); closeCardModal(); }
+});
+
+/* === PAYMENT SUCCESS TOAST === */
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('payment') === 'success') {
+  const fund = urlParams.get('fund') || 'your gift';
+  const toast = document.createElement('div');
+  toast.className = 'payment-toast';
+  toast.textContent = `Thank you! Your contribution to the ${fund} means the world to us.`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add('toast-visible'), 100);
+  setTimeout(() => { toast.classList.remove('toast-visible'); setTimeout(() => toast.remove(), 500); }, 6000);
+  history.replaceState({}, '', '/');
 }
 
 /* === COUNTDOWN === */

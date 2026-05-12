@@ -297,6 +297,7 @@
                 <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="Honeymoon Fund">Zelle</button>
                 <button class="fund-pay-badge fund-pay-btn" data-method="venmo" data-fund="Honeymoon Fund">Venmo</button>
                 <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Cash App</span>
+                <button class="fund-pay-badge fund-pay-btn fund-pay-card" data-method="card" data-fund="Honeymoon Fund">Credit Card</button>
               </div>
             </div>
           </div>
@@ -318,6 +319,7 @@
                 <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="House Fund">Zelle</button>
                 <button class="fund-pay-badge fund-pay-btn" data-method="venmo" data-fund="House Fund">Venmo</button>
                 <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Cash App</span>
+                <button class="fund-pay-badge fund-pay-btn fund-pay-card" data-method="card" data-fund="House Fund">Credit Card</button>
               </div>
             </div>
           </div>
@@ -433,6 +435,26 @@
         <span class="payment-modal-value">sulakshanasrivaths98@gmail.com</span>
       </div>
       <p class="payment-modal-note">Open your Zelle app or your bank app, then send to the phone number or email above.</p>
+    </div>
+  </div>
+
+  <!-- ===== CARD PAYMENT MODAL ===== -->
+  <div class="payment-modal-overlay" id="cardModal" role="dialog" aria-modal="true">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="cardModalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method">Credit Card</p>
+      <h3 class="payment-modal-fund" id="cardModalFund"></h3>
+      <div class="payment-modal-rule"></div>
+      <div class="card-fee-warning">
+        <strong>Note:</strong> Credit card payments include a 2.9% + 30¢ processing fee.
+        Consider using <strong>Venmo or Zelle</strong> to send the full amount with no fees.
+      </div>
+      <div class="card-amount-group">
+        <label class="form-label" for="cardAmount">Gift Amount (USD)</label>
+        <input class="form-input" type="number" id="cardAmount" placeholder="50" min="1" step="1" />
+      </div>
+      <p class="card-fee-calc" id="cardFeeCalc"></p>
+      <button class="btn-submit card-checkout-btn" id="cardCheckoutBtn" disabled>Continue to Checkout</button>
     </div>
   </div>
 

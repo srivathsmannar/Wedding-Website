@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const { Pool } = require('pg');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -85,6 +86,37 @@ app.get('/api/admin/export', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to export RSVPs.' });
+  }
+});
+
+app.post('/api/checkout', async (req, res) => {
+  const { fund, amount } = req.body;
+  const amountCents = Math.round(parseFloat(amount) * 100);
+
+  if (!fund || !amountCents || amountCents < 100) {
+    return res.status(400).json({ error: 'Invalid amount.' });
+  }
+
+  try {
+    const base = `${req.protocol}://${req.headers.host}`;
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price_data: {
+          currency: 'usd',
+          product_data: { name: `${fund} — Srivaths & Sulakshana` },
+          unit_amount: amountCents,
+        },
+        quantity: 1,
+      }],
+      mode: 'payment',
+      success_url: `${base}/?payment=success&fund=${encodeURIComponent(fund)}`,
+      cancel_url:  `${base}/#registry`,
+    });
+    res.json({ url: session.url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create checkout session.' });
   }
 });
 
