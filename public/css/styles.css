@@ -570,6 +570,100 @@ section { padding: 6rem 2rem; }
   color: var(--text-medium);
   border: 1px solid rgba(92, 61, 46, 0.2);
   padding: 0.3rem 0.75rem;
+  background: none;
+  font-family: 'Lato', sans-serif;
+}
+.fund-pay-btn {
+  cursor: pointer;
+  color: var(--mauve);
+  border-color: var(--mauve);
+  transition: background 0.2s, color 0.2s;
+}
+.fund-pay-btn:hover { background: var(--mauve); color: var(--white); }
+.fund-pay-soon { opacity: 0.4; cursor: default; }
+
+/* === PAYMENT MODAL === */
+.payment-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 26, 15, 0.6);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.payment-modal-overlay.open { display: flex; }
+.payment-modal {
+  background: var(--ivory);
+  border: 1px solid rgba(198, 150, 58, 0.35);
+  padding: 2.5rem 2rem;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow-md);
+}
+.payment-modal-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-light);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+.payment-modal-close:hover { color: var(--text-dark); }
+.payment-modal-method {
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.4rem;
+}
+.payment-modal-fund {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  color: var(--text-dark);
+}
+.payment-modal-rule {
+  width: 36px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1rem auto;
+  opacity: 0.7;
+}
+.payment-modal-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(198, 150, 58, 0.15);
+}
+.payment-modal-detail:last-of-type { border-bottom: none; }
+.payment-modal-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.payment-modal-value {
+  font-size: 0.92rem;
+  color: var(--text-dark);
+}
+.payment-modal-note {
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--text-medium);
+  background: rgba(46, 125, 122, 0.07);
+  border: 1px solid rgba(46, 125, 122, 0.2);
+  padding: 0.65rem 1rem;
+  line-height: 1.6;
 }
 
 /* === RSVP === */

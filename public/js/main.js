@@ -1,3 +1,30 @@
+/* === PAYMENT MODAL === */
+const paymentModal    = document.getElementById('paymentModal');
+const modalFundEl     = document.getElementById('modalFund');
+const modalFundNoteEl = document.getElementById('modalFundNote');
+const modalMethodEl   = document.getElementById('modalMethod');
+
+document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const fund   = btn.dataset.fund;
+    const method = btn.dataset.method.charAt(0).toUpperCase() + btn.dataset.method.slice(1);
+    modalMethodEl.textContent   = method;
+    modalFundEl.textContent     = fund;
+    modalFundNoteEl.textContent = fund;
+    paymentModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+document.getElementById('modalClose').addEventListener('click', closePaymentModal);
+paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePaymentModal(); });
+
+function closePaymentModal() {
+  paymentModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 /* === COUNTDOWN === */
 function updateCountdown() {
   const target = new Date('2026-06-07T10:00:00-07:00');

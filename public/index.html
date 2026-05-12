@@ -294,11 +294,10 @@
             <div class="fund-pay-methods">
               <span class="fund-pay-label">Send via</span>
               <div class="fund-pay-options">
-                <span class="fund-pay-badge">Zelle</span>
-                <span class="fund-pay-badge">Venmo</span>
-                <span class="fund-pay-badge">Apple Pay</span>
+                <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="Honeymoon Fund">Zelle</button>
+                <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Venmo</span>
+                <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Cash App</span>
               </div>
-              <span class="registry-soon">Details Coming Soon</span>
             </div>
           </div>
 
@@ -316,11 +315,10 @@
             <div class="fund-pay-methods">
               <span class="fund-pay-label">Send via</span>
               <div class="fund-pay-options">
-                <span class="fund-pay-badge">Zelle</span>
-                <span class="fund-pay-badge">Venmo</span>
-                <span class="fund-pay-badge">Apple Pay</span>
+                <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="House Fund">Zelle</button>
+                <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Venmo</span>
+                <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Cash App</span>
               </div>
-              <span class="registry-soon">Details Coming Soon</span>
             </div>
           </div>
 
@@ -418,6 +416,25 @@
     <p class="footer-names">Srivaths &amp; Sulakshana</p>
     <p class="footer-date">June 7, 2026 &nbsp;·&nbsp; BAPS Chino Hills</p>
   </footer>
+
+  <!-- ===== PAYMENT MODAL ===== -->
+  <div class="payment-modal-overlay" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="modalFund">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method" id="modalMethod">Zelle</p>
+      <h3 class="payment-modal-fund" id="modalFund">Honeymoon Fund</h3>
+      <div class="payment-modal-rule"></div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Phone</span>
+        <span class="payment-modal-value">562-565-5950</span>
+      </div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Email</span>
+        <span class="payment-modal-value">sulakshanasrivaths98@gmail.com</span>
+      </div>
+      <p class="payment-modal-note">Please add &ldquo;<span id="modalFundNote"></span>&rdquo; in the memo</p>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
