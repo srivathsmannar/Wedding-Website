@@ -711,9 +711,13 @@ section { padding: 6rem 2rem; }
   padding: 0.35rem 0.75rem;
   transition: background 0.2s, color 0.2s;
 }
-.zelle-bank-btn:hover {
-  background: var(--mauve);
-  color: var(--ivory);
+.zelle-bank-btn:hover { background: var(--mauve); color: var(--ivory); }
+.payment-modal-footnote {
+  margin-top: 0.75rem;
+  font-size: 0.72rem;
+  color: var(--text-light);
+  font-style: italic;
+  line-height: 1.5;
 }
 
 .venmo-open-btn {
