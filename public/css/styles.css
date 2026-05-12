@@ -679,6 +679,28 @@ section { padding: 6rem 2rem; }
   padding: 0.65rem 1rem;
   line-height: 1.6;
 }
+.zelle-banks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+.zelle-bank-btn {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--mauve);
+  border: 1px solid rgba(198, 150, 58, 0.6);
+  padding: 0.35rem 0.75rem;
+  transition: background 0.2s, color 0.2s;
+}
+.zelle-bank-btn:hover {
+  background: var(--mauve);
+  color: var(--ivory);
+}
 
 .venmo-open-btn {
   display: block;
