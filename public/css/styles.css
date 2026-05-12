@@ -129,6 +129,12 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
   z-index: 0;
 }
+@media (orientation: portrait) and (max-width: 768px) {
+  .hero::after {
+    background-size: 100% auto;
+    background-position: center top;
+  }
+}
 .hero-content {
   position: relative;
   z-index: 1;
