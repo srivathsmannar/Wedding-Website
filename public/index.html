@@ -11,13 +11,15 @@
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
-      <div class="nav-monogram">S &amp; S</div>
+      <a href="#home" class="nav-namam-link">
+        <img src="images/final namam.svg" alt="Sri Namam" class="nav-namam" />
+      </a>
       <ul class="nav-links">
         <li><a href="#couple">Us</a></li>
         <li><a href="#events">Ceremony</a></li>
         <li><a href="#venue">Venue</a></li>
         <li><a href="#registry">Registry</a></li>
-        <li><a href="#rsvp" class="nav-cta">RSVP</a></li>
+        <li><a href="#rsvp">RSVP</a></li>
       </ul>
     </div>
   </nav>
@@ -26,7 +28,8 @@
   <section id="home" class="hero">
     <div class="hero-content">
 
-      <p class="hero-pretext">Together with their families</p>
+      <p class="hero-blessing">With the blessings of Sri Venkateshwara and Alamelumanga Thayaru</p>
+      <p class="hero-pretext">Kazhiyur Mannar and Kanduri families invite you</p>
 
       <!-- Lotus decoration -->
       <svg class="lotus-svg" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -104,49 +107,22 @@
   <section id="couple" class="couple-photos">
     <div class="container">
       <div class="section-header fade-up">
-        <span class="section-label">The Couple</span>
-        <h2 class="section-title">Sulakshana &amp; Srivaths</h2>
+        <h2 class="section-title">The Couple</h2>
       </div>
 
-      <div class="couple-grid">
-
-        <div class="couple-card fade-up">
-          <div class="photo-placeholder">
-            <svg class="photo-silhouette" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="60" cy="52" r="28" stroke="#C6963A" stroke-width="1.2" opacity="0.3"/>
-              <path d="M10 148 C10 115 30 100 60 100 C90 100 110 115 110 148" stroke="#C6963A" stroke-width="1.2" stroke-linecap="round" opacity="0.3"/>
-              <!-- Saree drape suggestion -->
-              <path d="M28 110 Q20 125 18 140" stroke="#C6963A" stroke-width="0.8" opacity="0.2"/>
-              <path d="M92 110 Q100 125 102 140" stroke="#C6963A" stroke-width="0.8" opacity="0.2"/>
-            </svg>
-            <span class="photo-hint">Photo Coming Soon</span>
+      <div class="couple-single fade-up">
+        <img src="images/ss.jpg" alt="Sulakshana and Srivaths" class="couple-photo" />
+        <div class="couple-labels">
+          <div class="couple-card-label">
+            <h3 class="couple-person-name">Srivaths</h3>
+            <p class="couple-person-role">The Groom</p>
           </div>
+          <div class="couple-and">&</div>
           <div class="couple-card-label">
             <h3 class="couple-person-name">Sulakshana</h3>
             <p class="couple-person-role">The Bride</p>
           </div>
         </div>
-
-        <div class="couple-and fade-up">&</div>
-
-        <div class="couple-card fade-up">
-          <div class="photo-placeholder">
-            <svg class="photo-silhouette" viewBox="0 0 120 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="60" cy="52" r="28" stroke="#C6963A" stroke-width="1.2" opacity="0.3"/>
-              <path d="M10 148 C10 115 30 100 60 100 C90 100 110 115 110 148" stroke="#C6963A" stroke-width="1.2" stroke-linecap="round" opacity="0.3"/>
-              <!-- Sherwani suggestion -->
-              <path d="M40 105 L40 145" stroke="#C6963A" stroke-width="0.8" opacity="0.2"/>
-              <path d="M80 105 L80 145" stroke="#C6963A" stroke-width="0.8" opacity="0.2"/>
-              <path d="M40 118 L80 118" stroke="#C6963A" stroke-width="0.8" opacity="0.2"/>
-            </svg>
-            <span class="photo-hint">Photo Coming Soon</span>
-          </div>
-          <div class="couple-card-label">
-            <h3 class="couple-person-name">Srivaths</h3>
-            <p class="couple-person-role">The Groom</p>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -217,7 +193,7 @@
                 <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
                 <path d="M8 5v4l2.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
-              <span>Please arrive 15–20 minutes before the ceremony begins</span>
+              <span>Muhurtham begins at 6:13 AM — please arrive 20–30 minutes early</span>
             </div>
             <div class="venue-note">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -296,9 +272,8 @@
               <div class="fund-pay-options">
                 <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="Honeymoon Fund">Zelle</button>
                 <button class="fund-pay-badge fund-pay-btn" data-method="venmo" data-fund="Honeymoon Fund">Venmo</button>
-                <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Cash App</span>
+                <button class="fund-pay-badge fund-pay-btn" data-method="applechash" data-fund="Honeymoon Fund">Apple Cash</button>
                 <button class="fund-pay-badge fund-pay-btn" data-method="card" data-fund="Honeymoon Fund">Credit Card</button>
-                <button class="fund-pay-badge fund-pay-btn" data-method="applepay" data-fund="Honeymoon Fund">Apple Pay</button>
               </div>
             </div>
           </div>
@@ -319,9 +294,8 @@
               <div class="fund-pay-options">
                 <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="House Fund">Zelle</button>
                 <button class="fund-pay-badge fund-pay-btn" data-method="venmo" data-fund="House Fund">Venmo</button>
-                <span class="fund-pay-badge fund-pay-soon" title="Coming Soon">Cash App</span>
+                <button class="fund-pay-badge fund-pay-btn" data-method="applechash" data-fund="House Fund">Apple Cash</button>
                 <button class="fund-pay-badge fund-pay-btn" data-method="card" data-fund="House Fund">Credit Card</button>
-                <button class="fund-pay-badge fund-pay-btn" data-method="applepay" data-fund="House Fund">Apple Pay</button>
               </div>
             </div>
           </div>
@@ -366,7 +340,7 @@
           <!-- Muhurtham -->
           <div class="event-block">
             <p class="event-block-title">Wedding Ceremony</p>
-            <p class="event-block-time">Sunday, June 7, 2026 &nbsp;·&nbsp; Morning Ceremony</p>
+            <p class="event-block-time">Sunday, June 7, 2026 &nbsp;·&nbsp; Muhurtham at 6:13 AM</p>
             <div class="radio-group">
               <label class="radio-label">
                 <input type="radio" name="muhurtham" value="yes" id="muh-yes" />
@@ -440,6 +414,37 @@
     </div>
   </div>
 
+  <!-- ===== VENMO MODAL ===== -->
+  <div class="payment-modal-overlay" id="venmoModal" role="dialog" aria-modal="true">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="venmoModalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method">Venmo</p>
+      <h3 class="payment-modal-fund" id="venmoModalFund"></h3>
+      <div class="payment-modal-rule"></div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Username</span>
+        <span class="payment-modal-value">@SulakshanaK22</span>
+      </div>
+      <p class="payment-modal-note">Tap the button below to open Venmo. If the app doesn't launch, you can search <strong>@SulakshanaK22</strong> directly in Venmo.</p>
+      <a id="venmoOpenBtn" href="#" class="btn-submit venmo-open-btn" target="_blank" rel="noopener">Open Venmo</a>
+    </div>
+  </div>
+
+  <!-- ===== APPLE CASH MODAL ===== -->
+  <div class="payment-modal-overlay" id="appleCashModal" role="dialog" aria-modal="true">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="appleCashModalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method">Apple Cash</p>
+      <h3 class="payment-modal-fund" id="appleCashModalFund"></h3>
+      <div class="payment-modal-rule"></div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Phone</span>
+        <span class="payment-modal-value">+1 (919) 802-4576</span>
+      </div>
+      <p class="payment-modal-note">To send Apple Cash: open <strong>Messages</strong> on your iPhone, start a conversation with this number, and tap the <strong>$</strong> button — or open the <strong>Wallet</strong> app, tap Apple Cash, then tap Send and search for this number. No fees either way.</p>
+    </div>
+  </div>
+
   <!-- ===== CARD PAYMENT MODAL ===== -->
   <div class="payment-modal-overlay" id="cardModal" role="dialog" aria-modal="true">
     <div class="payment-modal">
@@ -449,7 +454,7 @@
       <div class="payment-modal-rule"></div>
       <div class="card-fee-warning">
         <strong>Heads up:</strong> This payment method has a 2.9% + 30¢ processing fee.
-        <span id="cardModalNote">Consider using Venmo, Zelle, or Cash App if it is not inconvenient.</span>
+        <span id="cardModalNote">Consider using Venmo, Zelle, or Apple Cash if it is not inconvenient.</span>
       </div>
       <div class="card-amount-group">
         <label class="form-label" for="cardAmount">Gift Amount (USD)</label>

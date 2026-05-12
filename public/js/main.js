@@ -1,7 +1,12 @@
 /* === PAYMENT MODAL === */
-const paymentModal  = document.getElementById('paymentModal');
-const modalFundEl   = document.getElementById('modalFund');
-const modalMethodEl = document.getElementById('modalMethod');
+const paymentModal    = document.getElementById('paymentModal');
+const modalFundEl     = document.getElementById('modalFund');
+const modalMethodEl   = document.getElementById('modalMethod');
+const venmoModal      = document.getElementById('venmoModal');
+const venmoModalFund  = document.getElementById('venmoModalFund');
+const venmoOpenBtn    = document.getElementById('venmoOpenBtn');
+const appleCashModal  = document.getElementById('appleCashModal');
+const appleCashFundEl = document.getElementById('appleCashModalFund');
 
 document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -9,16 +14,29 @@ document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
     const method = btn.dataset.method;
 
     closePaymentModal();
+    closeVenmoModal();
     closeCardModal();
+    closeAppleCashModal();
+
+    if (method === 'applechash') {
+      appleCashFundEl.textContent = fund;
+      appleCashModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      return;
+    }
 
     if (method === 'venmo') {
       const note     = encodeURIComponent(fund);
-      const deepLink = `venmo://paycharge?txn=pay&recipients=srivathsmannar&note=${note}`;
-      const webUrl   = `https://venmo.com/srivathsmannar`;
-      window.location.href = deepLink;
-      setTimeout(() => window.open(webUrl, '_blank'), 1500);
+      const deepLink = `venmo://paycharge?txn=pay&recipients=SulakshanaK22&note=${note}`;
+      venmoModalFund.textContent = fund;
+      venmoOpenBtn.href = deepLink;
+      venmoOpenBtn.onclick = () => setTimeout(() => window.open('https://venmo.com/SulakshanaK22', '_blank'), 1500);
+      venmoModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
       return;
     }
+
+    if (method === 'card' || method === 'applepay') return;
 
     modalMethodEl.textContent = method.charAt(0).toUpperCase() + method.slice(1);
     modalFundEl.textContent   = fund;
@@ -34,6 +52,23 @@ function closePaymentModal() {
   paymentModal.classList.remove('open');
   document.body.style.overflow = '';
 }
+
+document.getElementById('venmoModalClose').addEventListener('click', closeVenmoModal);
+venmoModal.addEventListener('click', (e) => { if (e.target === venmoModal) closeVenmoModal(); });
+
+function closeVenmoModal() {
+  venmoModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('appleCashModalClose').addEventListener('click', closeAppleCashModal);
+appleCashModal.addEventListener('click', (e) => { if (e.target === appleCashModal) closeAppleCashModal(); });
+
+function closeAppleCashModal() {
+  appleCashModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 
 /* === CARD PAYMENT MODAL === */
 const cardModal       = document.getElementById('cardModal');
@@ -52,7 +87,7 @@ document.querySelectorAll('.fund-pay-btn[data-method="card"], .fund-pay-btn[data
     cardModalMethod.textContent = btn.dataset.method === 'applepay' ? 'Apple Pay' : 'Credit Card';
     cardModalNote.textContent  = btn.dataset.method === 'applepay'
       ? 'Apple Pay will appear automatically on Apple devices in Safari.'
-      : 'Consider using Venmo, Zelle, or Cash App if it is not inconvenient.';
+      : 'Consider using Venmo, Zelle, or Apple Cash if it is not inconvenient.';
     cardAmountInput.value = '200';
     cardAmountInput.dispatchEvent(new Event('input'));
     cardModal.classList.add('open');
@@ -99,7 +134,7 @@ function closeCardModal() {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { closePaymentModal(); closeCardModal(); }
+  if (e.key === 'Escape') { closePaymentModal(); closeVenmoModal(); closeCardModal(); closeAppleCashModal(); }
 });
 
 /* === PAYMENT SUCCESS TOAST === */
@@ -117,7 +152,7 @@ if (urlParams.get('payment') === 'success') {
 
 /* === COUNTDOWN === */
 function updateCountdown() {
-  const target = new Date('2026-06-07T10:00:00-07:00');
+  const target = new Date('2026-06-07T06:13:00-07:00');
   const now = new Date();
   const diff = target - now;
 

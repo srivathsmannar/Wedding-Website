@@ -46,7 +46,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  padding: 1.6rem 2.5rem;
+  padding: 1rem 2.5rem;
   transition: all 0.4s ease;
 }
 .navbar.scrolled {
@@ -57,22 +57,30 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 1px 0 rgba(198, 150, 58, 0.18), var(--shadow-sm);
 }
 .nav-inner {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.6rem;
 }
-.nav-monogram {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--mauve);
-  letter-spacing: 0.04em;
+.nav-namam-link {
+  display: flex;
+  justify-content: center;
+}
+.nav-namam {
+  height: 100px;
+  width: auto;
+  display: block;
+  transition: height 0.4s ease;
+}
+.navbar.scrolled .nav-namam {
+  height: 56px;
 }
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 2.5rem;
 }
 .nav-links a {
@@ -84,16 +92,6 @@ img { max-width: 100%; display: block; }
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--mauve); }
-.nav-cta {
-  padding: 0.55rem 1.4rem;
-  border: 1px solid var(--mauve) !important;
-  color: var(--mauve) !important;
-  transition: all 0.2s !important;
-}
-.nav-cta:hover {
-  background: var(--mauve) !important;
-  color: var(--white) !important;
-}
 
 /* === HERO === */
 .hero {
@@ -104,7 +102,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 6rem 2rem 4rem;
+  padding: 13rem 2rem 4rem;
   background:
     radial-gradient(ellipse 90% 55% at 50% 0%,    rgba(140, 48, 96, 0.06) 0%, transparent 100%),
     radial-gradient(ellipse 60% 45% at 10% 100%,  rgba(46, 125, 122, 0.07) 0%, transparent 100%),
@@ -143,6 +141,16 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 1.6rem;
   max-width: 720px;
+}
+.hero-blessing {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  max-width: 420px;
+  text-align: center;
 }
 .hero-pretext {
   font-size: 0.68rem;
@@ -298,39 +306,26 @@ section { padding: 6rem 2rem; }
 .couple-photos {
   background-color: var(--ivory);
 }
-.couple-grid {
-  display: grid;
-  grid-template-columns: 1fr 60px 1fr;
-  align-items: center;
-  gap: 0;
-  max-width: 780px;
+.couple-single {
+  max-width: 520px;
   margin: 0 auto;
+  text-align: center;
 }
-.couple-card { text-align: center; }
-.photo-placeholder {
-  aspect-ratio: 3/4;
-  background: var(--cream);
-  border: 1px solid rgba(198, 150, 58, 0.28);
+.couple-photo {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1.5px solid rgba(198, 150, 58, 0.7);
+  box-shadow: var(--shadow-md);
+}
+.couple-labels {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  position: relative;
-  overflow: hidden;
-  transition: box-shadow 0.3s;
-  cursor: default;
+  gap: 2rem;
+  margin-top: 1.75rem;
 }
-.photo-placeholder:hover { box-shadow: var(--shadow-md); }
-.photo-silhouette { width: 55%; height: auto; }
-.photo-hint {
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-light);
-  opacity: 0.65;
-}
-.couple-card-label { margin-top: 1.25rem; }
+.couple-card-label { text-align: center; }
 .couple-person-name {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.8rem;
@@ -366,11 +361,11 @@ section { padding: 6rem 2rem; }
   margin: 0 auto;
 }
 .event-card {
-  background: var(--white);
+  background: var(--cream);
   padding: 3rem 2.5rem;
   text-align: center;
   position: relative;
-  border: 1px solid rgba(198, 150, 58, 0.28);
+  border: 1.5px solid rgba(198, 150, 58, 0.7);
   box-shadow: var(--shadow-sm);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -526,8 +521,8 @@ section { padding: 6rem 2rem; }
   gap: 1.25rem;
 }
 .registry-card {
-  background: var(--white);
-  border: 1px solid rgba(198, 150, 58, 0.28);
+  background: var(--cream);
+  border: 1.5px solid rgba(198, 150, 58, 0.7);
   padding: 2.25rem 1.5rem;
   text-align: center;
   transition: transform 0.25s, box-shadow 0.25s;
@@ -614,8 +609,8 @@ section { padding: 6rem 2rem; }
 }
 .payment-modal-overlay.open { display: flex; }
 .payment-modal {
-  background: var(--white);
-  border: 1px solid rgba(198, 150, 58, 0.35);
+  background: var(--ivory);
+  border: 1.5px solid rgba(198, 150, 58, 0.7);
   padding: 2.5rem 2rem;
   max-width: 380px;
   width: 90%;
@@ -684,6 +679,13 @@ section { padding: 6rem 2rem; }
   line-height: 1.6;
 }
 
+.venmo-open-btn {
+  display: block;
+  margin-top: 1.25rem;
+  text-align: center;
+  text-decoration: none;
+}
+
 /* Credit card badge */
 
 /* Card payment modal extras */
@@ -735,8 +737,8 @@ section { padding: 6rem 2rem; }
   width: fit-content;
 }
 .rsvp-form {
-  background: var(--white);
-  border: 1px solid rgba(198, 150, 58, 0.22);
+  background: var(--ivory);
+  border: 1.5px solid rgba(198, 150, 58, 0.7);
   padding: 3rem;
   box-shadow: var(--shadow-sm);
 }
@@ -780,8 +782,8 @@ section { padding: 6rem 2rem; }
 
 /* Event attendance blocks */
 .event-block {
-  background: rgba(240, 232, 216, 0.45);
-  border: 1px solid rgba(198, 150, 58, 0.2);
+  background: transparent;
+  border: 1.5px solid rgba(198, 150, 58, 0.7);
   padding: 1.5rem;
   margin-bottom: 1.25rem;
 }
@@ -852,7 +854,7 @@ section { padding: 6rem 2rem; }
 
 /* === FOOTER === */
 .footer {
-  background: #1A0808;
+  background: var(--ivory);
   padding: 3.5rem 2rem;
   text-align: center;
 }
@@ -904,39 +906,15 @@ section { padding: 6rem 2rem; }
 .fade-up:nth-child(3) { transition-delay: 0.2s; }
 .fade-up:nth-child(4) { transition-delay: 0.3s; }
 
-/* === WHITE-BG ELEMENT TEXT OVERRIDES (needed after red background change) === */
-.event-card,
-.registry-card,
-.rsvp-form,
-.payment-modal {
-  color: #2A1A0F;
-}
-.event-card .event-type,
-.event-card .event-date-text,
-.registry-card .registry-card-tag,
-.registry-card .registry-soon,
-.rsvp-form .form-label,
-.rsvp-form .rsvp-intro,
-.rsvp-form .event-block-title,
-.rsvp-form .event-block-time,
-.rsvp-form .radio-label,
-.payment-modal .payment-modal-label,
-.payment-modal .payment-modal-note {
-  color: #5C3D2E;
-}
-.event-card .event-name  { color: var(--mauve); }
-.event-card .event-time  { color: #5C3D2E; }
-.event-card .event-desc  { color: #5C3D2E; }
 .form-input,
 .form-select,
-.form-textarea           { color: #2A1A0F; }
+.form-textarea           { color: var(--text-dark); background: rgba(255,255,255,0.08); border-color: rgba(198, 150, 58, 0.45); }
 .form-input::placeholder,
 .form-textarea::placeholder { color: #9C7B6A; }
 .form-input:focus,
 .form-select:focus,
-.form-textarea:focus     { box-shadow: 0 0 0 3px rgba(212, 168, 64, 0.15); }
+.form-textarea:focus     { box-shadow: 0 0 0 3px rgba(212, 168, 64, 0.25); }
 .rsvp-deadline           { color: var(--teal); }
-.event-block             { background: rgba(240, 232, 216, 0.6); }
 .couple-person-name      { color: var(--text-dark); }
 .couple-and              { color: var(--gold); }
 .countdown-item          { background: rgba(255, 255, 255, 0.15); border-color: rgba(232, 212, 160, 0.4); }
@@ -962,8 +940,9 @@ section { padding: 6rem 2rem; }
   .countdown-item { min-width: 62px; padding: 0.6rem 0.75rem; }
   .countdown-value { font-size: 1.65rem; }
 
-  .nav-links a:not(.nav-cta) { display: none; }
-  .nav-links { gap: 1rem; }
+  .nav-links { gap: 1.2rem; flex-wrap: wrap; }
+  .nav-namam { height: 72px; }
+  .hero { padding-top: 10rem; }
 
   .bride-name, .groom-name { font-size: clamp(3.5rem, 18vw, 5.5rem); }
 }
