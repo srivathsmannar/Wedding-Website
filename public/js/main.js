@@ -1,16 +1,24 @@
 /* === PAYMENT MODAL === */
-const paymentModal    = document.getElementById('paymentModal');
-const modalFundEl     = document.getElementById('modalFund');
-const modalFundNoteEl = document.getElementById('modalFundNote');
-const modalMethodEl   = document.getElementById('modalMethod');
+const paymentModal  = document.getElementById('paymentModal');
+const modalFundEl   = document.getElementById('modalFund');
+const modalMethodEl = document.getElementById('modalMethod');
 
 document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
     const fund   = btn.dataset.fund;
-    const method = btn.dataset.method.charAt(0).toUpperCase() + btn.dataset.method.slice(1);
-    modalMethodEl.textContent   = method;
-    modalFundEl.textContent     = fund;
-    modalFundNoteEl.textContent = fund;
+    const method = btn.dataset.method;
+
+    if (method === 'venmo') {
+      const note     = encodeURIComponent(fund);
+      const deepLink = `venmo://paycharge?txn=pay&recipients=srivathsmannar&note=${note}`;
+      const webUrl   = `https://venmo.com/srivathsmannar`;
+      window.location.href = deepLink;
+      setTimeout(() => window.open(webUrl, '_blank'), 1500);
+      return;
+    }
+
+    modalMethodEl.textContent = method.charAt(0).toUpperCase() + method.slice(1);
+    modalFundEl.textContent   = fund;
     paymentModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   });
