@@ -58,7 +58,7 @@ cardAmountInput.addEventListener('input', () => {
   const amount = parseFloat(cardAmountInput.value);
   if (!amount || amount < 1) { cardFeeCalc.textContent = ''; cardCheckoutBtn.disabled = true; return; }
   const fee = (amount * 0.029 + 0.30).toFixed(2);
-  cardFeeCalc.textContent = `Processing fee: $${fee}. Consider using Venmo, Zelle, or Cash App instead.`;
+  cardFeeCalc.textContent = `Processing fee: $${fee}.`;
   cardCheckoutBtn.disabled = false;
 });
 
