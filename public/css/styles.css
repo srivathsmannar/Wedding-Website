@@ -1,0 +1,774 @@
+/* ================================================
+   SRIVATHS & SULAKSHANA — WEDDING WEBSITE
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap');
+
+/* === VARIABLES === */
+:root {
+  --ivory:       #FAF6EF;
+  --cream:       #F0E8D8;
+  --mauve:       #8C3060;
+  --deep-mauve:  #6B1F48;
+  --gold:        #C6963A;
+  --light-gold:  #E8D4A0;
+  --teal:        #2E7D7A;
+  --light-teal:  #A8CDCC;
+  --blush:       #F0D0C0;
+  --text-dark:   #2A1A0F;
+  --text-medium: #5C3D2E;
+  --text-light:  #9C7B6A;
+  --white:       #FFFFFF;
+  --shadow-sm:   0 2px 16px rgba(44, 26, 15, 0.07);
+  --shadow-md:   0 8px 36px rgba(44, 26, 15, 0.12);
+}
+
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  color: var(--text-dark);
+  background-color: var(--ivory);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* === NAVBAR === */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.6rem 2.5rem;
+  transition: all 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(250, 246, 239, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 1rem 2.5rem;
+  box-shadow: 0 1px 0 rgba(198, 150, 58, 0.18), var(--shadow-sm);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-monogram {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--mauve);
+  letter-spacing: 0.04em;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+.nav-links a {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-medium);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--mauve); }
+.nav-cta {
+  padding: 0.55rem 1.4rem;
+  border: 1px solid var(--mauve) !important;
+  color: var(--mauve) !important;
+  transition: all 0.2s !important;
+}
+.nav-cta:hover {
+  background: var(--mauve) !important;
+  color: var(--white) !important;
+}
+
+/* === HERO === */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 0%,    rgba(140, 48, 96, 0.06) 0%, transparent 100%),
+    radial-gradient(ellipse 60% 45% at 10% 100%,  rgba(46, 125, 122, 0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 50% 40% at 90% 80%,   rgba(198, 150, 58, 0.05) 0%, transparent 100%),
+    var(--ivory);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(198, 150, 58, 0.13) 1px, transparent 1px);
+  background-size: 38px 38px;
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+  max-width: 720px;
+}
+.hero-pretext {
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.lotus-svg {
+  width: 220px;
+  height: auto;
+}
+.hero-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  line-height: 1;
+}
+.bride-name, .groom-name {
+  font-size: clamp(4.5rem, 11vw, 7.5rem);
+  color: var(--text-dark);
+  display: block;
+  letter-spacing: -0.01em;
+}
+.ampersand {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--gold);
+  display: block;
+  line-height: 1.3;
+}
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-date, .hero-venue {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--text-medium);
+}
+.hero-venue { font-style: italic; }
+.hero-sep { color: var(--gold); }
+
+/* === COUNTDOWN === */
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--light-gold);
+  padding: 0.75rem 1.2rem;
+  min-width: 74px;
+  backdrop-filter: blur(8px);
+}
+.countdown-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--mauve);
+  line-height: 1;
+  min-width: 2ch;
+  text-align: center;
+}
+.countdown-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-top: 0.3rem;
+}
+.countdown-sep {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  color: var(--gold);
+  opacity: 0.55;
+  padding-bottom: 0.8rem;
+}
+.countdown-over {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--mauve);
+}
+
+/* Scroll indicator */
+.scroll-down {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-light);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  animation: nudge 2.2s ease-in-out infinite;
+}
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  55% { transform: translateY(7px); }
+}
+
+/* === DIVIDER === */
+.ornamental-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+.ornamental-divider svg { width: min(420px, 90%); height: 24px; }
+
+/* === SECTIONS === */
+section { padding: 6rem 2rem; }
+.container { max-width: 1100px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--text-dark);
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.section-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: var(--text-medium);
+  font-style: italic;
+}
+
+/* === COUPLE PHOTOS === */
+.couple-photos {
+  background-color: var(--ivory);
+}
+.couple-grid {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: center;
+  gap: 0;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.couple-card { text-align: center; }
+.photo-placeholder {
+  aspect-ratio: 3/4;
+  background: var(--cream);
+  border: 1px solid rgba(198, 150, 58, 0.28);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+  cursor: default;
+}
+.photo-placeholder:hover { box-shadow: var(--shadow-md); }
+.photo-silhouette { width: 55%; height: auto; }
+.photo-hint {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  opacity: 0.65;
+}
+.couple-card-label { margin-top: 1.25rem; }
+.couple-person-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text-dark);
+}
+.couple-person-role {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-top: 0.2rem;
+}
+.couple-and {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 3.5rem;
+  color: var(--gold);
+  text-align: center;
+  line-height: 1;
+}
+
+/* === EVENTS === */
+.events {
+  background-color: var(--cream);
+  background-image: radial-gradient(circle, rgba(198, 150, 58, 0.11) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.events-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 440px);
+  justify-content: center;
+  margin: 0 auto;
+}
+.event-card {
+  background: var(--white);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(198, 150, 58, 0.28);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+/* Corner ornaments */
+.event-card::before,
+.event-card::after,
+.event-card-corners::before,
+.event-card-corners::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-style: solid;
+  border-color: var(--gold);
+}
+.event-card::before { top: 11px; left: 11px;   border-width: 1.5px 0 0 1.5px; }
+.event-card::after  { top: 11px; right: 11px;  border-width: 1.5px 1.5px 0 0; }
+.event-card-corners { position: absolute; inset: 0; pointer-events: none; }
+.event-card-corners::before { bottom: 11px; left: 11px;  border-width: 0 0 1.5px 1.5px; }
+.event-card-corners::after  { bottom: 11px; right: 11px; border-width: 0 1.5px 1.5px 0; }
+
+.event-icon { width: 52px; height: 52px; margin: 0 auto 1.5rem; }
+.event-type {
+  font-size: 0.64rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.4rem;
+}
+.event-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  color: var(--mauve);
+  font-weight: 400;
+  margin-bottom: 0;
+}
+.event-rule {
+  width: 36px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1rem auto;
+  opacity: 0.65;
+}
+.event-time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--text-medium);
+}
+.event-date-text {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.event-desc {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--text-medium);
+}
+
+/* === VENUE === */
+.venue { background-color: var(--ivory); }
+.venue-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.venue-photo-box {
+  aspect-ratio: 4/3;
+  border: 1px solid rgba(198, 150, 58, 0.28);
+  overflow: hidden;
+}
+.venue-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.venue-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  color: var(--text-dark);
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
+.venue-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--gold);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.venue-address {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  line-height: 1.9;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--light-gold);
+}
+.venue-notes { margin-bottom: 2rem; }
+.venue-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+.venue-note svg { flex-shrink: 0; margin-top: 2px; color: var(--teal); }
+.venue-note span { font-size: 0.88rem; color: var(--text-medium); }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2rem;
+  background: var(--mauve);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--deep-mauve); }
+
+/* === REGISTRY === */
+.registry {
+  background-color: var(--cream);
+  background-image: radial-gradient(circle, rgba(198, 150, 58, 0.1) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.registry-content { max-width: 680px; margin: 0 auto; text-align: center; }
+.registry-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  color: var(--text-medium);
+  font-style: italic;
+  line-height: 1.85;
+  margin-bottom: 3rem;
+}
+.registry-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+.registry-card {
+  background: var(--white);
+  border: 1px solid rgba(198, 150, 58, 0.28);
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  position: relative;
+}
+.registry-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+.registry-card-icon { width: 38px; height: 38px; margin: 0 auto 1rem; color: var(--gold); }
+.registry-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+}
+.registry-card-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+.registry-soon {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(46, 125, 122, 0.09);
+  padding: 0.25rem 0.7rem;
+  margin-top: 0.75rem;
+}
+.fund-cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.fund-card { cursor: default; }
+.fund-pay-methods {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(198, 150, 58, 0.2);
+}
+.fund-pay-label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 0.6rem;
+}
+.fund-pay-options {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.fund-pay-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-medium);
+  border: 1px solid rgba(92, 61, 46, 0.2);
+  padding: 0.3rem 0.75rem;
+}
+
+/* === RSVP === */
+.rsvp {
+  background:
+    linear-gradient(180deg, rgba(140, 48, 96, 0.03) 0%, transparent 60%),
+    var(--ivory);
+}
+.rsvp-content { max-width: 620px; margin: 0 auto; }
+.rsvp-intro {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--text-medium);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+.rsvp-deadline {
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: rgba(46, 125, 122, 0.08);
+  padding: 0.45rem 1.25rem;
+  margin: 0 auto 2.5rem;
+  width: fit-content;
+}
+.rsvp-form {
+  background: var(--white);
+  border: 1px solid rgba(198, 150, 58, 0.22);
+  padding: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+.form-group { margin-bottom: 1.6rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-medium);
+  margin-bottom: 0.5rem;
+}
+.form-label .req { color: var(--mauve); margin-left: 2px; }
+.form-label .opt { color: var(--text-light); font-weight: 300; letter-spacing: 0; text-transform: none; font-size: 0.75rem; }
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(92, 61, 46, 0.18);
+  background: var(--white);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.93rem;
+  color: var(--text-dark);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  border-radius: 0;
+  outline: none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--mauve);
+  box-shadow: 0 0 0 3px rgba(140, 48, 96, 0.06);
+}
+.form-input::placeholder,
+.form-textarea::placeholder { color: var(--text-light); }
+.form-textarea { resize: vertical; min-height: 90px; }
+
+/* Event attendance blocks */
+.event-block {
+  background: rgba(240, 232, 216, 0.45);
+  border: 1px solid rgba(198, 150, 58, 0.2);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.event-block-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+}
+.event-block-time {
+  font-size: 0.73rem;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+.radio-group { display: flex; gap: 1.75rem; margin-bottom: 0; }
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: var(--text-medium);
+}
+.radio-label input[type="radio"] { accent-color: var(--mauve); width: 15px; height: 15px; cursor: pointer; }
+.guest-count { display: none; margin-top: 1.1rem; }
+.guest-count.visible { display: block; }
+
+.btn-submit {
+  width: 100%;
+  padding: 1.05rem 2rem;
+  background: var(--mauve);
+  color: var(--white);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.75rem;
+  border-radius: 0;
+}
+.btn-submit:hover:not(:disabled) { background: var(--deep-mauve); }
+.btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.form-message {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  display: none;
+}
+.form-message.success {
+  background: rgba(46, 125, 122, 0.08);
+  border: 1px solid rgba(46, 125, 122, 0.3);
+  color: var(--teal);
+  display: block;
+}
+.form-message.error {
+  background: rgba(140, 48, 96, 0.06);
+  border: 1px solid rgba(140, 48, 96, 0.28);
+  color: var(--mauve);
+  display: block;
+}
+
+/* === FOOTER === */
+.footer {
+  background: var(--text-dark);
+  padding: 3.5rem 2rem;
+  text-align: center;
+}
+.footer-lotus { margin: 0 auto 1.5rem; opacity: 0.3; }
+.footer-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--light-gold);
+  margin-bottom: 0.25rem;
+}
+.footer-date {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* === FADE-UP ANIMATION === */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  section { padding: 4rem 1.25rem; }
+
+  .couple-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    max-width: 280px;
+  }
+  .couple-and { font-size: 2.5rem; padding: 0.5rem 0; }
+
+  .events-grid { grid-template-columns: 1fr; }
+  .venue-content { grid-template-columns: 1fr; gap: 2.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .rsvp-form { padding: 2rem 1.5rem; }
+
+  .countdown { gap: 0.3rem; }
+  .countdown-item { min-width: 62px; padding: 0.6rem 0.75rem; }
+  .countdown-value { font-size: 1.65rem; }
+
+  .nav-links a:not(.nav-cta) { display: none; }
+  .nav-links { gap: 1rem; }
+
+  .bride-name, .groom-name { font-size: clamp(3.5rem, 18vw, 5.5rem); }
+}
