@@ -44,9 +44,8 @@ document.querySelectorAll('.fund-pay-btn[data-method="card"]').forEach((btn) => 
   btn.addEventListener('click', () => {
     currentCardFund = btn.dataset.fund;
     cardModalFund.textContent = currentCardFund;
-    cardAmountInput.value = '';
-    cardFeeCalc.textContent = '';
-    cardCheckoutBtn.disabled = true;
+    cardAmountInput.value = '200';
+    cardAmountInput.dispatchEvent(new Event('input'));
     cardModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   });
@@ -55,9 +54,8 @@ document.querySelectorAll('.fund-pay-btn[data-method="card"]').forEach((btn) => 
 cardAmountInput.addEventListener('input', () => {
   const amount = parseFloat(cardAmountInput.value);
   if (!amount || amount < 1) { cardFeeCalc.textContent = ''; cardCheckoutBtn.disabled = true; return; }
-  const fee      = (amount * 0.029 + 0.30).toFixed(2);
-  const received = (amount - fee).toFixed(2);
-  cardFeeCalc.textContent = `You give $${amount.toFixed(2)} · We receive ~$${received}`;
+  const fee = (amount * 0.029 + 0.30).toFixed(2);
+  cardFeeCalc.textContent = `Processing fee: $${fee} — Venmo, Zelle, or Cash App have no fees.`;
   cardCheckoutBtn.disabled = false;
 });
 

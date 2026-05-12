@@ -98,7 +98,8 @@ app.post('/api/checkout', async (req, res) => {
   }
 
   try {
-    const base = `${req.protocol}://${req.headers.host}`;
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const base = `${protocol}://${req.headers.host}`;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{
