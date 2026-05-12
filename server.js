@@ -105,7 +105,7 @@ app.post('/api/checkout', async (req, res) => {
       line_items: [{
         price_data: {
           currency: 'usd',
-          product_data: { name: `${fund} — Srivaths & Sulakshana` },
+          product_data: { name: `${fund} — Sulakshana & Srivaths` },
           unit_amount: amountCents,
         },
         quantity: 1,

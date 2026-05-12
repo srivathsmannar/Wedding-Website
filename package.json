@@ -1,7 +1,7 @@
 {
   "name": "srivaths-sulakshana-wedding",
   "version": "1.0.0",
-  "description": "Wedding website for Srivaths & Sulakshana — June 6, 2026",
+  "description": "Wedding website for Sulakshana & Srivaths — June 6, 2026",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
