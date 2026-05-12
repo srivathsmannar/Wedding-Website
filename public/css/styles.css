@@ -6,21 +6,21 @@
 
 /* === VARIABLES === */
 :root {
-  --ivory:       #FAF6EF;
-  --cream:       #F0E8D8;
-  --mauve:       #A8192A;
-  --deep-mauve:  #831422;
-  --gold:        #C6963A;
-  --light-gold:  #E8D4A0;
-  --teal:        #2E7D7A;
+  --ivory:       #8C1A22;
+  --cream:       #761520;
+  --mauve:       #D4A840;
+  --deep-mauve:  #B8922A;
+  --gold:        #E8D4A0;
+  --light-gold:  #F5EAC8;
+  --teal:        #4ABBB7;
   --light-teal:  #A8CDCC;
   --blush:       #F0D0C0;
-  --text-dark:   #2A1A0F;
-  --text-medium: #5C3D2E;
-  --text-light:  #9C7B6A;
+  --text-dark:   #FAF6EF;
+  --text-medium: #E8D4A0;
+  --text-light:  #C8A882;
   --white:       #FFFFFF;
-  --shadow-sm:   0 2px 16px rgba(44, 26, 15, 0.07);
-  --shadow-md:   0 8px 36px rgba(44, 26, 15, 0.12);
+  --shadow-sm:   0 2px 16px rgba(0, 0, 0, 0.3);
+  --shadow-md:   0 8px 36px rgba(0, 0, 0, 0.5);
 }
 
 /* === RESET === */
@@ -47,7 +47,7 @@ img { max-width: 100%; display: block; }
   transition: all 0.4s ease;
 }
 .navbar.scrolled {
-  background: rgba(250, 246, 239, 0.96);
+  background: rgba(140, 26, 34, 0.97);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding: 1rem 2.5rem;
@@ -596,7 +596,7 @@ section { padding: 6rem 2rem; }
 }
 .payment-modal-overlay.open { display: flex; }
 .payment-modal {
-  background: var(--ivory);
+  background: var(--white);
   border: 1px solid rgba(198, 150, 58, 0.35);
   padding: 2.5rem 2rem;
   max-width: 380px;
@@ -834,7 +834,7 @@ section { padding: 6rem 2rem; }
 
 /* === FOOTER === */
 .footer {
-  background: var(--text-dark);
+  background: #1A0808;
   padding: 3.5rem 2rem;
   text-align: center;
 }
@@ -885,6 +885,44 @@ section { padding: 6rem 2rem; }
 .fade-up:nth-child(2) { transition-delay: 0.1s; }
 .fade-up:nth-child(3) { transition-delay: 0.2s; }
 .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* === WHITE-BG ELEMENT TEXT OVERRIDES (needed after red background change) === */
+.event-card,
+.registry-card,
+.rsvp-form,
+.payment-modal {
+  color: #2A1A0F;
+}
+.event-card .event-type,
+.event-card .event-date-text,
+.registry-card .registry-card-tag,
+.registry-card .registry-soon,
+.rsvp-form .form-label,
+.rsvp-form .rsvp-intro,
+.rsvp-form .event-block-title,
+.rsvp-form .event-block-time,
+.rsvp-form .radio-label,
+.payment-modal .payment-modal-label,
+.payment-modal .payment-modal-note {
+  color: #5C3D2E;
+}
+.event-card .event-name  { color: var(--mauve); }
+.event-card .event-time  { color: #5C3D2E; }
+.event-card .event-desc  { color: #5C3D2E; }
+.form-input,
+.form-select,
+.form-textarea           { color: #2A1A0F; }
+.form-input::placeholder,
+.form-textarea::placeholder { color: #9C7B6A; }
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus     { box-shadow: 0 0 0 3px rgba(212, 168, 64, 0.15); }
+.rsvp-deadline           { color: var(--teal); }
+.event-block             { background: rgba(240, 232, 216, 0.6); }
+.couple-person-name      { color: var(--text-dark); }
+.couple-and              { color: var(--gold); }
+.countdown-item          { background: rgba(255, 255, 255, 0.15); border-color: rgba(232, 212, 160, 0.4); }
+.countdown-label         { color: var(--text-light); }
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
