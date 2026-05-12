@@ -150,6 +150,23 @@ if (urlParams.get('payment') === 'success') {
   history.replaceState({}, '', '/');
 }
 
+/* === COPY BUTTONS === */
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-btn');
+  if (!btn) return;
+  const text = btn.dataset.copy;
+  navigator.clipboard.writeText(text).then(() => {
+    const icon = btn.querySelector('.copy-icon');
+    const orig = btn.textContent;
+    btn.classList.add('copied');
+    if (icon) icon.textContent = '✓';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      if (icon) icon.textContent = '⎘';
+    }, 2000);
+  });
+});
+
 /* === COUNTDOWN === */
 function updateCountdown() {
   const target = new Date('2026-06-07T06:13:00-07:00');
