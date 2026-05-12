@@ -55,7 +55,7 @@ cardAmountInput.addEventListener('input', () => {
   const amount = parseFloat(cardAmountInput.value);
   if (!amount || amount < 1) { cardFeeCalc.textContent = ''; cardCheckoutBtn.disabled = true; return; }
   const fee = (amount * 0.029 + 0.30).toFixed(2);
-  cardFeeCalc.textContent = `Processing fee: $${fee} — Venmo, Zelle, or Cash App have no fees.`;
+  cardFeeCalc.textContent = `Processing fee: $${fee}. Consider using Venmo, Zelle, or Cash App instead.`;
   cardCheckoutBtn.disabled = false;
 });
 
@@ -72,7 +72,7 @@ cardCheckoutBtn.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (data.url) { window.location.href = data.url; }
-    else { alert('Something went wrong. Please try again.'); resetCardBtn(); }
+    else { alert(data.error || 'Something went wrong. Please try again.'); resetCardBtn(); }
   } catch { alert('Network error. Please try again.'); resetCardBtn(); }
 });
 

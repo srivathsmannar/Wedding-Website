@@ -116,8 +116,8 @@ app.post('/api/checkout', async (req, res) => {
     });
     res.json({ url: session.url });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to create checkout session.' });
+    console.error('Stripe error:', err.message, err.type, err.code);
+    res.status(500).json({ error: err.message || 'Failed to create checkout session.' });
   }
 });
 
