@@ -38,15 +38,21 @@ function closePaymentModal() {
 /* === CARD PAYMENT MODAL === */
 const cardModal       = document.getElementById('cardModal');
 const cardModalFund   = document.getElementById('cardModalFund');
+const cardModalMethod = document.getElementById('cardModalMethod');
+const cardModalNote   = document.getElementById('cardModalNote');
 const cardAmountInput = document.getElementById('cardAmount');
 const cardFeeCalc     = document.getElementById('cardFeeCalc');
 const cardCheckoutBtn = document.getElementById('cardCheckoutBtn');
 let currentCardFund   = '';
 
-document.querySelectorAll('.fund-pay-btn[data-method="card"]').forEach((btn) => {
+document.querySelectorAll('.fund-pay-btn[data-method="card"], .fund-pay-btn[data-method="applepay"]').forEach((btn) => {
   btn.addEventListener('click', () => {
     currentCardFund = btn.dataset.fund;
     cardModalFund.textContent = currentCardFund;
+    cardModalMethod.textContent = btn.dataset.method === 'applepay' ? 'Apple Pay' : 'Credit Card';
+    cardModalNote.textContent  = btn.dataset.method === 'applepay'
+      ? 'Apple Pay will appear automatically on Apple devices in Safari.'
+      : 'Consider using Venmo, Zelle, or Cash App if it is not inconvenient.';
     cardAmountInput.value = '200';
     cardAmountInput.dispatchEvent(new Event('input'));
     cardModal.classList.add('open');
