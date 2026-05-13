@@ -68,12 +68,13 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0;
   text-decoration: none;
 }
+.nav-namam { margin-bottom: -4px; }
 .nav-namam-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 300;
   font-style: italic;
   letter-spacing: 0.06em;
@@ -96,7 +97,7 @@ img { max-width: 100%; display: block; }
   gap: 2.5rem;
 }
 .nav-links a {
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -437,11 +438,19 @@ section { padding: 6rem 2rem; }
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
+.event-pacific {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-top: 0.2rem;
+}
 .event-arrive {
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--teal);
+  margin-top: 0.5rem;
   margin-bottom: 1.5rem;
 }
 .event-desc {
@@ -750,13 +759,14 @@ section { padding: 6rem 2rem; }
 
 /* Card payment modal extras */
 .card-fee-warning {
-  background: rgba(198, 150, 58, 0.08);
-  border: 1px solid rgba(198, 150, 58, 0.3);
-  padding: 0.8rem 1rem;
+  background: #FAF6EF;
+  border: 1.5px solid rgba(198, 150, 58, 0.5);
+  padding: 0.9rem 1.1rem;
   font-size: 0.82rem;
-  color: var(--text-medium);
+  color: #3a2a1a;
   line-height: 1.65;
   text-align: left;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.06);
 }
 .card-amount-group { margin-top: 1.25rem; text-align: left; }
 .card-amount-group .form-label { margin-bottom: 0.4rem; }
