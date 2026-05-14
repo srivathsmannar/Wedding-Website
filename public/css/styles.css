@@ -593,8 +593,7 @@ section { padding: 6rem 2rem; }
   margin-top: 0.75rem;
 }
 .fund-cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.fund-card { cursor: default; }
-.fund-pay-methods {
+.fund-card { cursor: default; }.fund-pay-methods {
   margin-top: 1.5rem;
   padding-top: 1.25rem;
   border-top: 1px solid rgba(198, 150, 58, 0.2);
