@@ -105,7 +105,7 @@ app.get('/api/admin/export', async (req, res) => {
 
 app.post('/api/checkout', async (req, res) => {
   const { fund, amount } = req.body;
-  const returnTo = req.body.returnTo === '/' ? '/' : '/wedding';
+  const returnTo = req.body.returnTo === '/' ? '/' : '/weddingpage';
   const amountCents = Math.round(parseFloat(amount) * 100);
 
   if (!fund || !amountCents || amountCents < 100) {
