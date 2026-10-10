@@ -1,0 +1,169 @@
+/* === PAYMENT MODAL === */
+const paymentModal    = document.getElementById('paymentModal');
+const modalFundEl     = document.getElementById('modalFund');
+const modalMethodEl   = document.getElementById('modalMethod');
+const venmoModal      = document.getElementById('venmoModal');
+const venmoModalFund  = document.getElementById('venmoModalFund');
+const venmoOpenBtn    = document.getElementById('venmoOpenBtn');
+const appleCashModal  = document.getElementById('appleCashModal');
+const appleCashFundEl = document.getElementById('appleCashModalFund');
+
+document.querySelectorAll('.fund-pay-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const fund   = btn.dataset.fund;
+    const method = btn.dataset.method;
+
+    closePaymentModal();
+    closeVenmoModal();
+    closeCardModal();
+    closeAppleCashModal();
+
+    if (method === 'applechash') {
+      appleCashFundEl.textContent = fund;
+      appleCashModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+
+    if (method === 'venmo') {
+      const note     = encodeURIComponent(fund);
+      const deepLink = `venmo://paycharge?txn=pay&recipients=SulakshanaK22&note=${note}`;
+      venmoModalFund.textContent = fund;
+      venmoOpenBtn.href = deepLink;
+      venmoOpenBtn.onclick = () => setTimeout(() => window.open('https://venmo.com/SulakshanaK22', '_blank'), 1500);
+      venmoModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+
+    if (method === 'card' || method === 'applepay') return;
+
+    modalMethodEl.textContent = method.charAt(0).toUpperCase() + method.slice(1);
+    modalFundEl.textContent   = fund;
+    paymentModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+document.getElementById('modalClose').addEventListener('click', closePaymentModal);
+paymentModal.addEventListener('click', (e) => { if (e.target === paymentModal) closePaymentModal(); });
+
+function closePaymentModal() {
+  paymentModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('venmoModalClose').addEventListener('click', closeVenmoModal);
+venmoModal.addEventListener('click', (e) => { if (e.target === venmoModal) closeVenmoModal(); });
+
+function closeVenmoModal() {
+  venmoModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('appleCashModalClose').addEventListener('click', closeAppleCashModal);
+appleCashModal.addEventListener('click', (e) => { if (e.target === appleCashModal) closeAppleCashModal(); });
+
+function closeAppleCashModal() {
+  appleCashModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+
+/* === CARD PAYMENT MODAL === */
+const cardModal       = document.getElementById('cardModal');
+const cardModalFund   = document.getElementById('cardModalFund');
+const cardModalMethod = document.getElementById('cardModalMethod');
+const cardModalNote   = document.getElementById('cardModalNote');
+const cardAmountInput = document.getElementById('cardAmount');
+const cardFeeCalc     = document.getElementById('cardFeeCalc');
+const cardCheckoutBtn = document.getElementById('cardCheckoutBtn');
+let currentCardFund   = '';
+
+document.querySelectorAll('.fund-pay-btn[data-method="card"], .fund-pay-btn[data-method="applepay"]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    currentCardFund = btn.dataset.fund;
+    cardModalFund.textContent = currentCardFund;
+    cardModalMethod.textContent = btn.dataset.method === 'applepay' ? 'Apple Pay' : 'Credit Card';
+    cardModalNote.textContent  = btn.dataset.method === 'applepay'
+      ? 'Apple Pay will appear automatically on Apple devices in Safari.'
+      : 'Consider using Venmo, Zelle, or Apple Cash if it is not inconvenient.';
+    cardAmountInput.value = '200';
+    cardAmountInput.dispatchEvent(new Event('input'));
+    cardModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+cardAmountInput.addEventListener('input', () => {
+  const amount = parseFloat(cardAmountInput.value);
+  if (!amount || amount < 1) { cardFeeCalc.textContent = ''; cardCheckoutBtn.disabled = true; return; }
+  const fee = (amount * 0.029 + 0.30).toFixed(2);
+  cardFeeCalc.textContent = `Processing fee: $${fee}.`;
+  cardCheckoutBtn.disabled = false;
+});
+
+cardCheckoutBtn.addEventListener('click', async () => {
+  const amount = parseFloat(cardAmountInput.value);
+  if (!amount || amount < 1) return;
+  cardCheckoutBtn.disabled = true;
+  cardCheckoutBtn.textContent = 'Redirecting…';
+  try {
+    const res  = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fund: currentCardFund, amount, returnTo: window.location.pathname }),
+    });
+    const data = await res.json();
+    if (data.url) { window.location.href = data.url; }
+    else { alert(data.error || 'Something went wrong. Please try again.'); resetCardBtn(); }
+  } catch { alert('Network error. Please try again.'); resetCardBtn(); }
+});
+
+function resetCardBtn() {
+  cardCheckoutBtn.disabled = false;
+  cardCheckoutBtn.textContent = 'Continue to Checkout';
+}
+
+document.getElementById('cardModalClose').addEventListener('click', closeCardModal);
+cardModal.addEventListener('click', (e) => { if (e.target === cardModal) closeCardModal(); });
+
+function closeCardModal() {
+  cardModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closePaymentModal(); closeVenmoModal(); closeCardModal(); closeAppleCashModal(); }
+});
+
+/* === PAYMENT SUCCESS TOAST === */
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('payment') === 'success') {
+  const fund = urlParams.get('fund') || 'your gift';
+  const toast = document.createElement('div');
+  toast.className = 'payment-toast';
+  toast.textContent = `Thank you! Your contribution to the ${fund} means the world to us.`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.classList.add('toast-visible'), 100);
+  setTimeout(() => { toast.classList.remove('toast-visible'); setTimeout(() => toast.remove(), 500); }, 6000);
+  history.replaceState({}, '', window.location.pathname);
+}
+
+/* === COPY BUTTONS === */
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-btn');
+  if (!btn) return;
+  const text = btn.dataset.copy;
+  navigator.clipboard.writeText(text).then(() => {
+    const icon = btn.querySelector('.copy-icon');
+    const orig = btn.textContent;
+    btn.classList.add('copied');
+    if (icon) icon.textContent = '✓';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      if (icon) icon.textContent = '⎘';
+    }, 2000);
+  });
+});
+

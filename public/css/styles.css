@@ -1045,7 +1045,8 @@ section { padding: 6rem 2rem; }
   .countdown-item { min-width: 62px; padding: 0.6rem 0.75rem; }
   .countdown-value { font-size: 1.65rem; }
 
-  .nav-links { gap: 1rem; flex-wrap: nowrap; }
+  .navbar, .navbar.scrolled { padding: 1rem 1rem; }
+  .nav-links { gap: 0.4rem 1rem; flex-wrap: wrap; }
   .nav-links a { font-size: 0.6rem; letter-spacing: 0.12em; }
   .nav-namam { height: 72px; }
   .hero { padding-top: 10rem; }

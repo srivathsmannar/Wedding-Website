@@ -16,11 +16,12 @@
         <p class="nav-namam-text">Srimathe Ramanujaya Namaha</p>
       </a>
       <ul class="nav-links">
+        <li><a href="#couple">Us</a></li>
         <li><a href="#reception">Reception</a></li>
         <li><a href="#venue">Venue</a></li>
+        <li><a href="#registry">Registry</a></li>
         <li><a href="#rsvp">RSVP</a></li>
         <li><a href="/wedding">Wedding</a></li>
-        <li><a href="/wedding#registry">Registry</a></li>
       </ul>
     </div>
   </nav>
@@ -94,13 +95,29 @@
         </div>
       </div>
 
-      <a href="#reception" class="scroll-down" aria-label="Scroll down">
+      <a href="#couple" class="scroll-down" aria-label="Scroll down">
         <span>Scroll</span>
         <svg width="12" height="18" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6 1v14M1 11l5 5 5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
         </svg>
       </a>
 
+    </div>
+  </section>
+
+  <!-- ===== COUPLE PHOTOS ===== -->
+  <section id="couple" class="couple-photos">
+    <div class="container">
+      <div class="section-header fade-up">
+        <h2 class="section-title">The Couple</h2>
+      </div>
+
+      <div class="couple-single fade-up">
+        <img src="images/ss.jpg" alt="Sri Sulakshana and Srivathsangan" class="couple-photo" />
+        <div class="couple-labels">
+        </div>
+        <p class="couple-thankyou fade-up">With the grace of Alamelumanga Thayaru and Sri Venkateshwara, we are humbled and overjoyed to begin this sacred journey together. Your presence and blessings mean more to us than words can express. We carry your love with us — may Perumal shower his blessings upon you and your family.</p>
+      </div>
     </div>
   </section>
 
@@ -174,9 +191,77 @@
       </div>
 
       <p class="wedding-link fade-up">
-        Looking for our wedding ceremony, photos or registry?
+        Looking for our wedding ceremony details?
         <a href="/wedding">Visit our wedding page &rarr;</a>
       </p>
+    </div>
+  </section>
+
+  <!-- ===== REGISTRY ===== -->
+  <section id="registry" class="registry">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="section-label">Gifts</span>
+        <h2 class="section-title">Registry</h2>
+      </div>
+
+      <div class="registry-content">
+        <p class="registry-quote fade-up">
+          Your presence at our wedding is the greatest gift of all.
+          For those who wish to honour us with a gift,
+          we've set up two funds below.
+        </p>
+
+        <div class="registry-cards fund-cards">
+
+          <!-- House Fund -->
+          <div class="registry-card fund-card fade-up">
+            <div class="registry-card-icon">
+              <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 18 L19 6 L33 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="9" y="18" width="20" height="14" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="15" y="24" width="8" height="8" stroke="currentColor" stroke-width="1.3"/>
+              </svg>
+            </div>
+            <p class="registry-card-name">House Fund</p>
+            <p class="registry-card-tag">Help us build our home</p>
+            <div class="fund-pay-methods">
+              <span class="fund-pay-label">Send via</span>
+              <div class="fund-pay-options">
+                <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="House Fund">Zelle</button>
+                <button class="fund-pay-badge fund-pay-btn" data-method="venmo" data-fund="House Fund">Venmo</button>
+                <button class="fund-pay-badge fund-pay-btn" data-method="applechash" data-fund="House Fund">Apple Cash</button>
+                <button class="fund-pay-badge fund-pay-btn" data-method="card" data-fund="House Fund">Credit Card</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Honeymoon Fund -->
+          <div class="registry-card fund-card fade-up">
+            <div class="registry-card-icon">
+              <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 26 C10 18 16 14 22 12 L30 10 L28 18 C26 24 20 28 14 30 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M22 12 L26 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="30" cy="10" r="2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M6 26 L4 32" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="registry-card-name">Honeymoon Fund</p>
+            <p class="registry-card-tag">Help us adventure together</p>
+            <div class="fund-pay-methods">
+              <span class="fund-pay-label">Send via</span>
+              <div class="fund-pay-options">
+                <button class="fund-pay-badge fund-pay-btn" data-method="zelle" data-fund="Honeymoon Fund">Zelle</button>
+                <button class="fund-pay-badge fund-pay-btn" data-method="venmo" data-fund="Honeymoon Fund">Venmo</button>
+                <button class="fund-pay-badge fund-pay-btn" data-method="applechash" data-fund="Honeymoon Fund">Apple Cash</button>
+                <button class="fund-pay-badge fund-pay-btn" data-method="card" data-fund="Honeymoon Fund">Credit Card</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -269,6 +354,84 @@
     <p class="footer-date">Reception &nbsp;·&nbsp; November 6, 2026 &nbsp;·&nbsp; Morrisville, NC</p>
   </footer>
 
+  <!-- ===== PAYMENT MODAL ===== -->
+  <div class="payment-modal-overlay" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="modalFund">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method" id="modalMethod">Zelle</p>
+      <h3 class="payment-modal-fund" id="modalFund">Honeymoon Fund</h3>
+      <div class="payment-modal-rule"></div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Phone</span>
+        <button class="payment-modal-value copy-btn" data-copy="+1 (562) 565-5950">+1 (562) 565-5950 <span class="copy-icon">⎘</span></button>
+      </div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Email</span>
+        <button class="payment-modal-value copy-btn" data-copy="sulakshanasrivaths98@gmail.com">sulakshanasrivaths98@gmail.com <span class="copy-icon">⎘</span></button>
+      </div>
+      <p class="payment-modal-note">Tap to copy either the phone or email, then open your banking app (links for a few below) and use it to send with Zelle.</p>
+      <div class="zelle-banks">
+        <a class="zelle-bank-btn" href="https://secure.bankofamerica.com/login/sign-in/entry/signOn.go" target="_blank" rel="noopener">Bank of America</a>
+        <a class="zelle-bank-btn" href="https://secure.chase.com/" target="_blank" rel="noopener">Chase</a>
+        <a class="zelle-bank-btn" href="https://connect.secure.wellsfargo.com/auth/login/present" target="_blank" rel="noopener">Wells Fargo</a>
+        <a class="zelle-bank-btn" href="https://www.sofi.com/login/" target="_blank" rel="noopener">SoFi</a>
+        <a class="zelle-bank-btn" href="https://verified.capitalone.com/auth/signin" target="_blank" rel="noopener">Capital One</a>
+      </div>
+      <p class="payment-modal-footnote">Note: on mobile, links may direct you to the website instead of the app — it's easier to just go to your banking app directly.</p>
+    </div>
+  </div>
+
+  <!-- ===== VENMO MODAL ===== -->
+  <div class="payment-modal-overlay" id="venmoModal" role="dialog" aria-modal="true">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="venmoModalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method">Venmo</p>
+      <h3 class="payment-modal-fund" id="venmoModalFund"></h3>
+      <div class="payment-modal-rule"></div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Phone</span>
+        <button class="payment-modal-value copy-btn" data-copy="+1 (919) 802-4576">+1 (919) 802-4576 <span class="copy-icon">⎘</span></button>
+      </div>
+      <p class="payment-modal-note">Copy the number and open the Venmo app in case the link below doesn't work.</p>
+      <a id="venmoOpenBtn" href="#" class="btn-submit venmo-open-btn" target="_blank" rel="noopener">Open Venmo</a>
+    </div>
+  </div>
+
+  <!-- ===== APPLE CASH MODAL ===== -->
+  <div class="payment-modal-overlay" id="appleCashModal" role="dialog" aria-modal="true">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="appleCashModalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method">Apple Cash</p>
+      <h3 class="payment-modal-fund" id="appleCashModalFund"></h3>
+      <div class="payment-modal-rule"></div>
+      <div class="payment-modal-detail">
+        <span class="payment-modal-label">Phone</span>
+        <button class="payment-modal-value copy-btn" data-copy="+1 (919) 802-4576">+1 (919) 802-4576 <span class="copy-icon">⎘</span></button>
+      </div>
+      <p class="payment-modal-note">Tap to copy the number first. Then open <strong>Messages</strong> on your iPhone, start a conversation with Sulakshana, and click the Apple Cash button by opening the <strong>+</strong> option. Or open <strong>Wallet</strong>, go to Apple Cash, tap Send and paste the number.</p>
+    </div>
+  </div>
+
+  <!-- ===== CARD PAYMENT MODAL ===== -->
+  <div class="payment-modal-overlay" id="cardModal" role="dialog" aria-modal="true">
+    <div class="payment-modal">
+      <button class="payment-modal-close" id="cardModalClose" aria-label="Close">&times;</button>
+      <p class="payment-modal-method" id="cardModalMethod">Credit Card</p>
+      <h3 class="payment-modal-fund" id="cardModalFund"></h3>
+      <div class="payment-modal-rule"></div>
+      <div class="card-fee-warning">
+        <strong>This payment method has a 2.9% + 30¢ processing fee. <span id="cardModalNote">Consider using Venmo, Zelle, or Apple Cash if it is not inconvenient.</span></strong>
+      </div>
+      <div class="card-amount-group">
+        <label class="form-label" for="cardAmount">Gift Amount (USD)</label>
+        <input class="form-input" type="number" id="cardAmount" placeholder="50" min="1" step="1" />
+      </div>
+      <p class="card-fee-calc" id="cardFeeCalc"></p>
+      <button class="btn-submit card-checkout-btn" id="cardCheckoutBtn" disabled>Continue to Checkout</button>
+    </div>
+  </div>
+
+  <script src="js/registry.js"></script>
   <script src="js/reception.js"></script>
 </body>
 </html>

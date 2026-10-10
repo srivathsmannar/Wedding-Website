@@ -105,6 +105,7 @@ app.get('/api/admin/export', async (req, res) => {
 
 app.post('/api/checkout', async (req, res) => {
   const { fund, amount } = req.body;
+  const returnTo = req.body.returnTo === '/' ? '/' : '/wedding';
   const amountCents = Math.round(parseFloat(amount) * 100);
 
   if (!fund || !amountCents || amountCents < 100) {
@@ -125,8 +126,8 @@ app.post('/api/checkout', async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: `${base}/wedding?payment=success&fund=${encodeURIComponent(fund)}`,
-      cancel_url:  `${base}/wedding#registry`,
+      success_url: `${base}${returnTo}?payment=success&fund=${encodeURIComponent(fund)}`,
+      cancel_url:  `${base}${returnTo}#registry`,
     });
     res.json({ url: session.url });
   } catch (err) {
