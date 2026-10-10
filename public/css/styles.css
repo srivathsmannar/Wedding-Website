@@ -530,6 +530,7 @@ section { padding: 6rem 2rem; }
   max-width: 520px;
   text-align: center;
 }
+.venue-content-single .venue-name { margin-bottom: 1.25rem; }
 .venue-content-single .venue-address {
   padding-left: 0;
   border-left: none;
