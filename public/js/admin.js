@@ -39,14 +39,14 @@ async function loadRSVPs() {
           ${r.phone ? `<div class="guest-sub">${esc(r.phone)}</div>` : ''}
         </td>
         <td>
-          <span class="badge ${r.muhurtham ? 'yes' : 'no'}">
+          ${r.event === 'reception' ? '<span class="none">—</span>' : `<span class="badge ${r.muhurtham ? 'yes' : 'no'}">
             ${r.muhurtham ? `Yes &mdash; ${r.muhurtham_guests} guest${r.muhurtham_guests !== 1 ? 's' : ''}` : 'Not attending'}
-          </span>
+          </span>`}
         </td>
         <td>
-          <span class="badge ${r.reception ? 'yes' : 'no'}">
+          ${r.event !== 'reception' ? '<span class="none">—</span>' : `<span class="badge ${r.reception ? 'yes' : 'no'}">
             ${r.reception ? `Yes &mdash; ${r.reception_guests} guest${r.reception_guests !== 1 ? 's' : ''}` : 'Not attending'}
-          </span>
+          </span>`}
         </td>
         <td class="col-notes">${r.notes ? esc(r.notes) : '<span class="none">—</span>'}</td>
         <td class="col-date">${new Date(r.submitted_at).toLocaleString('en-US', {

@@ -147,7 +147,7 @@ if (urlParams.get('payment') === 'success') {
   document.body.appendChild(toast);
   setTimeout(() => toast.classList.add('toast-visible'), 100);
   setTimeout(() => { toast.classList.remove('toast-visible'); setTimeout(() => toast.remove(), 500); }, 6000);
-  history.replaceState({}, '', '/');
+  history.replaceState({}, '', window.location.pathname);
 }
 
 /* === COPY BUTTONS === */

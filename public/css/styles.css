@@ -539,6 +539,31 @@ section { padding: 6rem 2rem; }
 }
 .btn-primary:hover { background: var(--deep-mauve); }
 
+/* === RECEPTION PAGE === */
+.venue-content-single {
+  grid-template-columns: 1fr;
+  max-width: 520px;
+  text-align: center;
+}
+.venue-content-single .venue-address {
+  padding-left: 0;
+  border-left: none;
+}
+.wedding-link {
+  margin-top: 4rem;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text-medium);
+}
+.wedding-link a {
+  color: var(--mauve);
+  border-bottom: 1px solid rgba(212, 168, 64, 0.4);
+  margin-left: 0.25rem;
+}
+.wedding-link a:hover { color: var(--light-gold); }
+
 /* === REGISTRY === */
 .registry {
   background-color: var(--cream);

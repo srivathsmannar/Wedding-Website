@@ -26,27 +26,40 @@ async function initDb() {
       submitted_at     TIMESTAMPTZ DEFAULT NOW()
     )
   `);
+  await pool.query(`
+    ALTER TABLE rsvps
+      ADD COLUMN IF NOT EXISTS event            TEXT DEFAULT 'wedding',
+      ADD COLUMN IF NOT EXISTS reception        BOOLEAN DEFAULT FALSE,
+      ADD COLUMN IF NOT EXISTS reception_guests INTEGER DEFAULT 0
+  `);
 }
 
+const dbReady = initDb();
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
 app.post('/api/rsvp', async (req, res) => {
-  const { name, email, phone, muhurtham, muhurthamGuests, notes } = req.body;
+  const { name, email, phone, muhurtham, muhurthamGuests, reception, receptionGuests, notes } = req.body;
+  const event = req.body.event === 'reception' ? 'reception' : 'wedding';
 
   if (!name?.trim()) return res.status(400).json({ error: 'Name is required.' });
   if (!email?.trim()) return res.status(400).json({ error: 'Email is required.' });
 
   try {
+    await dbReady;
     const result = await pool.query(
-      `INSERT INTO rsvps (name, email, phone, muhurtham, muhurtham_guests, notes)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      `INSERT INTO rsvps (name, email, phone, event, muhurtham, muhurtham_guests, reception, reception_guests, notes)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
       [
         name.trim(),
         email.trim(),
         (phone || '').trim(),
+        event,
         !!muhurtham,
         muhurtham ? (parseInt(muhurthamGuests) || 1) : 0,
+        !!reception,
+        reception ? (parseInt(receptionGuests) || 1) : 0,
         (notes || '').trim(),
       ]
     );
@@ -71,12 +84,13 @@ app.get('/api/admin/export', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM rsvps ORDER BY id DESC');
     const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const headers = ['ID', 'Name', 'Email', 'Phone', 'Attending Muhurtham', 'Muhurtham Guests', 'Notes', 'Submitted At'];
+    const headers = ['ID', 'Name', 'Email', 'Phone', 'Event', 'Attending Muhurtham', 'Muhurtham Guests', 'Attending Reception', 'Reception Guests', 'Notes', 'Submitted At'];
     const csv = [
       headers.map(esc).join(','),
       ...rows.map((r) => [
-        r.id, r.name, r.email, r.phone,
-        r.muhurtham ? 'Yes' : 'No', r.muhurtham_guests,
+        r.id, r.name, r.email, r.phone, r.event,
+        r.event === 'reception' ? '' : (r.muhurtham ? 'Yes' : 'No'), r.muhurtham_guests,
+        r.event === 'reception' ? (r.reception ? 'Yes' : 'No') : '', r.reception_guests,
         r.notes, r.submitted_at,
       ].map(esc).join(',')),
     ].join('\n');
@@ -111,8 +125,8 @@ app.post('/api/checkout', async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: `${base}/?payment=success&fund=${encodeURIComponent(fund)}`,
-      cancel_url:  `${base}/#registry`,
+      success_url: `${base}/wedding?payment=success&fund=${encodeURIComponent(fund)}`,
+      cancel_url:  `${base}/wedding#registry`,
     });
     res.json({ url: session.url });
   } catch (err) {
@@ -121,7 +135,7 @@ app.post('/api/checkout', async (req, res) => {
   }
 });
 
-initDb()
+dbReady
   .then(() => {
     if (!process.env.VERCEL) {
       app.listen(PORT, () => {
