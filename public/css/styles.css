@@ -6,18 +6,18 @@
 
 /* === VARIABLES === */
 :root {
-  --ivory:       #E8C979;
-  --cream:       #DDB862;
+  --ivory:       #D9AA45;
+  --cream:       #CC9A33;
   --mauve:       #8C1A22;
   --deep-mauve:  #6E141B;
   --gold:        #7A2E1A;
   --light-gold:  #A0742A;
-  --teal:        #1E6B68;
+  --teal:        #134F4C;
   --light-teal:  #2E7D7A;
   --blush:       #F0D0C0;
   --text-dark:   #3E0C10;
   --text-medium: #5E1A1F;
-  --text-light:  #7E4A36;
+  --text-light:  #5A2618;
   --white:       #FFFFFF;
   --shadow-sm:   0 2px 16px rgba(62, 12, 16, 0.15);
   --shadow-md:   0 8px 36px rgba(62, 12, 16, 0.25);
@@ -50,7 +50,7 @@ img { max-width: 100%; display: block; }
   transition: all 0.4s ease;
 }
 .navbar.scrolled {
-  background: rgba(232, 201, 121, 0.97);
+  background: rgba(217, 170, 69, 0.97);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding: 1rem 2.5rem;
@@ -130,21 +130,6 @@ img { max-width: 100%; display: block; }
   background-image: radial-gradient(circle, rgba(140, 26, 34, 0.13) 1px, transparent 1px);
   background-size: 38px 38px;
   pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('/images/thayer.png') center/cover no-repeat;
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 0;
-}
-@media (orientation: portrait) and (max-width: 768px) {
-  .hero::after {
-    background-size: 100% auto;
-    background-position: center top;
-  }
 }
 .hero-content {
   position: relative;
