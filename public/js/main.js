@@ -45,6 +45,8 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
   const btn = document.getElementById('submitBtn');
   const msg = document.getElementById('formMessage');
 
+  if (!document.getElementById('name').value.trim()) return showMsg('error', 'Please enter your name.');
+
   const selected = document.querySelector('input[name="muhurtham"]:checked');
   if (!selected) return showMsg('error', 'Please indicate your attendance.');
 
@@ -64,12 +66,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
   };
 
   try {
-    const res  = await fetch('/api/rsvp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json();
+    const data = await submitRsvp(payload);
     if (data.success) {
       showMsg('success', 'Thank you! Your RSVP has been received. We can\'t wait to celebrate with you!');
       document.getElementById('rsvpForm').reset();
@@ -78,7 +75,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
       showMsg('error', data.error || 'Something went wrong. Please try again.');
     }
   } catch {
-    showMsg('error', 'Network error. Please check your connection and try again.');
+    showMsg('error', 'We couldn\'t reach the server. Please check your connection and try again.');
   } finally {
     btn.disabled = false;
     btn.textContent = 'Send RSVP';
@@ -90,3 +87,27 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
     msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 });
+
+/* Retries on network errors and 5xx responses (e.g. a cold start timing out). */
+async function submitRsvp(payload, attempts = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      const res = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.status >= 500 && i < attempts) throw new Error(`HTTP ${res.status}`);
+      try {
+        return await res.json();
+      } catch {
+        // Non-JSON body (e.g. a platform error page)
+        if (i < attempts) throw new Error('Bad response');
+        return { error: 'Something went wrong. Please try again.' };
+      }
+    } catch (err) {
+      if (i >= attempts) throw err;
+      await new Promise((r) => setTimeout(r, 1000 * i));
+    }
+  }
+}

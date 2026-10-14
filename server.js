@@ -11,7 +11,13 @@ const PORT = process.env.PORT || 3000;
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 10000,
+  max: 3,
 });
+
+// Idle clients can be dropped by the DB/proxy; don't let that crash the function.
+pool.on('error', (err) => console.error('pg pool error:', err.message));
 
 async function initDb() {
   await pool.query(`
@@ -34,7 +40,30 @@ async function initDb() {
   `);
 }
 
-const dbReady = initDb();
+// Cache the init promise, but clear it on failure so a single transient
+// error (e.g. a cold DB) doesn't break every request on this instance.
+let dbReadyPromise = null;
+function dbReady() {
+  if (!dbReadyPromise) {
+    dbReadyPromise = initDb().catch((err) => {
+      dbReadyPromise = null;
+      throw err;
+    });
+  }
+  return dbReadyPromise;
+}
+
+async function withRetry(fn, attempts = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i >= attempts) throw err;
+      console.error(`DB attempt ${i} failed, retrying:`, err.message);
+      await new Promise((r) => setTimeout(r, 500 * i));
+    }
+  }
+}
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
@@ -44,16 +73,16 @@ app.post('/api/rsvp', async (req, res) => {
   const event = req.body.event === 'reception' ? 'reception' : 'wedding';
 
   if (!name?.trim()) return res.status(400).json({ error: 'Name is required.' });
-  if (!email?.trim()) return res.status(400).json({ error: 'Email is required.' });
 
   try {
-    await dbReady;
-    const result = await pool.query(
+    const result = await withRetry(async () => {
+      await dbReady();
+      return pool.query(
       `INSERT INTO rsvps (name, email, phone, event, muhurtham, muhurtham_guests, reception, reception_guests, notes)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
       [
         name.trim(),
-        email.trim(),
+        (email || '').trim(),
         (phone || '').trim(),
         event,
         !!muhurtham,
@@ -62,7 +91,8 @@ app.post('/api/rsvp', async (req, res) => {
         reception ? (parseInt(receptionGuests) || 1) : 0,
         (notes || '').trim(),
       ]
-    );
+      );
+    });
     res.json({ success: true, id: result.rows[0].id });
   } catch (err) {
     console.error(err);
@@ -136,7 +166,7 @@ app.post('/api/checkout', async (req, res) => {
   }
 });
 
-dbReady
+dbReady()
   .then(() => {
     if (!process.env.VERCEL) {
       app.listen(PORT, () => {
