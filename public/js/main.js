@@ -57,6 +57,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
   const muhurtham = selected.value === 'yes';
 
   const payload = {
+    submissionId:    getSubmissionId(),
     name:            document.getElementById('name').value.trim(),
     email:           document.getElementById('email').value.trim(),
     phone:           document.getElementById('phone').value.trim(),
@@ -70,6 +71,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
     if (data.success) {
       showMsg('success', 'Thank you! Your RSVP has been received. We can\'t wait to celebrate with you!');
       document.getElementById('rsvpForm').reset();
+      submissionId = null;
       document.getElementById('muhurtham-guests').classList.remove('visible');
     } else {
       showMsg('error', data.error || 'Something went wrong. Please try again.');
@@ -88,14 +90,28 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e) => {
   }
 });
 
-/* Retries on network errors and 5xx responses (e.g. a cold start timing out). */
-async function submitRsvp(payload, attempts = 3) {
+/* One id per RSVP, reused across retries and manual resubmits until it succeeds,
+   so the server can ignore duplicates. */
+let submissionId = null;
+function getSubmissionId() {
+  if (!submissionId) {
+    submissionId = (crypto.randomUUID && crypto.randomUUID()) ||
+      `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  }
+  return submissionId;
+}
+
+/* Retries on network errors, timeouts and 5xx responses (e.g. a cold start). */
+async function submitRsvp(payload, attempts = 4) {
   for (let i = 1; ; i++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 12000);
     try {
       const res = await fetch('/api/rsvp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
       if (res.status >= 500 && i < attempts) throw new Error(`HTTP ${res.status}`);
       try {
@@ -108,6 +124,8 @@ async function submitRsvp(payload, attempts = 3) {
     } catch (err) {
       if (i >= attempts) throw err;
       await new Promise((r) => setTimeout(r, 1000 * i));
+    } finally {
+      clearTimeout(timer);
     }
   }
 }

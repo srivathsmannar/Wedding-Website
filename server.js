@@ -2,25 +2,35 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const { Pool } = require('pg');
+const { Client } = require('pg');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const pool = new Pool({
+const dbConfig = {
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-  connectionTimeoutMillis: 10000,
-  idleTimeoutMillis: 10000,
-  max: 3,
-});
+  connectionTimeoutMillis: 4000,
+  query_timeout: 4000,
+};
 
-// Idle clients can be dropped by the DB/proxy; don't let that crash the function.
-pool.on('error', (err) => console.error('pg pool error:', err.message));
+// Use a fresh connection per query instead of a pool. On Vercel the function is
+// frozen between requests, so pooled sockets go stale (the DB closes them while
+// the idle timer can't run) and the next query hangs until the function is killed.
+async function query(text, params) {
+  const client = new Client(dbConfig);
+  client.on('error', (err) => console.error('pg client error:', err.message));
+  try {
+    await client.connect();
+    return await client.query(text, params);
+  } finally {
+    client.end().catch(() => {});
+  }
+}
 
 async function initDb() {
-  await pool.query(`
+  await query(`
     CREATE TABLE IF NOT EXISTS rsvps (
       id               SERIAL PRIMARY KEY,
       name             TEXT NOT NULL,
@@ -32,35 +42,39 @@ async function initDb() {
       submitted_at     TIMESTAMPTZ DEFAULT NOW()
     )
   `);
-  await pool.query(`
+  await query(`
     ALTER TABLE rsvps
       ADD COLUMN IF NOT EXISTS event            TEXT DEFAULT 'wedding',
       ADD COLUMN IF NOT EXISTS reception        BOOLEAN DEFAULT FALSE,
-      ADD COLUMN IF NOT EXISTS reception_guests INTEGER DEFAULT 0
+      ADD COLUMN IF NOT EXISTS reception_guests INTEGER DEFAULT 0,
+      ADD COLUMN IF NOT EXISTS submission_id    TEXT
   `);
+  await query('CREATE UNIQUE INDEX IF NOT EXISTS rsvps_submission_id_key ON rsvps (submission_id)');
 }
 
-// Cache the init promise, but clear it on failure so a single transient
-// error (e.g. a cold DB) doesn't break every request on this instance.
-let dbReadyPromise = null;
-function dbReady() {
-  if (!dbReadyPromise) {
-    dbReadyPromise = initDb().catch((err) => {
-      dbReadyPromise = null;
-      throw err;
-    });
-  }
-  return dbReadyPromise;
-}
+// Schema setup is kept off the request path (ALTER TABLE takes a lock and adds
+// round-trips on every cold start). It only runs if an insert hits a missing
+// table/column.
+const SCHEMA_ERRORS = new Set(['42P01', '42703', '42P10']);
 
-async function withRetry(fn, attempts = 3) {
+// Retry transient failures, but stay well inside the function's time limit so
+// the browser gets a real response and can retry itself.
+async function withRetry(fn, { attempts = 3, budgetMs = 5000 } = {}) {
+  const start = Date.now();
+  let migrated = false;
   for (let i = 1; ; i++) {
     try {
       return await fn();
     } catch (err) {
-      if (i >= attempts) throw err;
-      console.error(`DB attempt ${i} failed, retrying:`, err.message);
-      await new Promise((r) => setTimeout(r, 500 * i));
+      if (SCHEMA_ERRORS.has(err.code) && !migrated) {
+        migrated = true;
+        await initDb();
+      } else if (i >= attempts || Date.now() - start > budgetMs) {
+        throw err;
+      } else {
+        console.error(`DB attempt ${i} failed, retrying:`, err.message);
+        await new Promise((r) => setTimeout(r, 300 * i));
+      }
     }
   }
 }
@@ -69,17 +83,18 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
 app.post('/api/rsvp', async (req, res) => {
-  const { name, email, phone, muhurtham, muhurthamGuests, reception, receptionGuests, notes } = req.body;
+  const { name, email, phone, muhurtham, muhurthamGuests, reception, receptionGuests, notes, submissionId } = req.body;
   const event = req.body.event === 'reception' ? 'reception' : 'wedding';
 
   if (!name?.trim()) return res.status(400).json({ error: 'Name is required.' });
 
   try {
-    const result = await withRetry(async () => {
-      await dbReady();
-      return pool.query(
-      `INSERT INTO rsvps (name, email, phone, event, muhurtham, muhurtham_guests, reception, reception_guests, notes)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
+    // submissionId makes retries and resubmits idempotent: a repeat of an
+    // insert that already succeeded is a no-op instead of a duplicate row.
+    const result = await withRetry(() => query(
+      `INSERT INTO rsvps (name, email, phone, event, muhurtham, muhurtham_guests, reception, reception_guests, notes, submission_id)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       ON CONFLICT (submission_id) DO NOTHING RETURNING id`,
       [
         name.trim(),
         (email || '').trim(),
@@ -90,10 +105,10 @@ app.post('/api/rsvp', async (req, res) => {
         !!reception,
         reception ? (parseInt(receptionGuests) || 1) : 0,
         (notes || '').trim(),
+        typeof submissionId === 'string' && submissionId ? submissionId.slice(0, 64) : null,
       ]
-      );
-    });
-    res.json({ success: true, id: result.rows[0].id });
+    ));
+    res.json({ success: true, id: result.rows[0]?.id });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to save RSVP. Please try again.' });
@@ -102,7 +117,7 @@ app.post('/api/rsvp', async (req, res) => {
 
 app.get('/api/admin/rsvps', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM rsvps ORDER BY id DESC');
+    const { rows } = await query('SELECT * FROM rsvps ORDER BY id DESC');
     res.json(rows);
   } catch (err) {
     console.error(err);
@@ -112,7 +127,7 @@ app.get('/api/admin/rsvps', async (req, res) => {
 
 app.get('/api/admin/export', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM rsvps ORDER BY id DESC');
+    const { rows } = await query('SELECT * FROM rsvps ORDER BY id DESC');
     const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const headers = ['ID', 'Name', 'Email', 'Phone', 'Event', 'Attending Muhurtham', 'Muhurtham Guests', 'Attending Reception', 'Reception Guests', 'Notes', 'Submitted At'];
     const csv = [
@@ -166,15 +181,12 @@ app.post('/api/checkout', async (req, res) => {
   }
 });
 
-dbReady()
-  .then(() => {
-    if (!process.env.VERCEL) {
-      app.listen(PORT, () => {
-        console.log(`\n  Wedding website  →  http://localhost:${PORT}`);
-        console.log(`  Admin dashboard  →  http://localhost:${PORT}/admin.html\n`);
-      });
-    }
-  })
-  .catch(console.error);
+if (!process.env.VERCEL) {
+  initDb().catch(console.error);
+  app.listen(PORT, () => {
+    console.log(`\n  Wedding website  →  http://localhost:${PORT}`);
+    console.log(`  Admin dashboard  →  http://localhost:${PORT}/admin.html\n`);
+  });
+}
 
 module.exports = app;
