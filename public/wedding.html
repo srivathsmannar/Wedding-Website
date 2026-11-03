@@ -9,6 +9,16 @@
 </head>
 <body>
 
+  <!-- ===== RSVP CLOSED POPUP ===== -->
+  <div class="rsvp-popup" id="rsvpPopup" role="dialog" aria-modal="true" aria-labelledby="rsvpPopupTitle">
+    <div class="rsvp-popup-card">
+      <button class="rsvp-popup-close" id="rsvpPopupClose" aria-label="Close">&times;</button>
+      <h2 class="rsvp-popup-title" id="rsvpPopupTitle">RSVPs Are Now Closed</h2>
+      <p class="rsvp-popup-text">Thank you to everyone who responded — we can't wait to celebrate with you!</p>
+      <button class="rsvp-popup-btn" id="rsvpPopupOk">OK</button>
+    </div>
+  </div>
+
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
@@ -305,7 +315,7 @@
       </div>
 
       <div class="rsvp-content">
-        <p class="rsvp-intro fade-up">
+        <p class="rsvp-intro rsvp-closed fade-up">
           RSVPs are now closed. Thank you to everyone who responded — we can't wait to celebrate with you!
         </p>
       </div>

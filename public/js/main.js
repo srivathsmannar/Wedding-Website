@@ -30,3 +30,11 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
 document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+/* === RSVP CLOSED POPUP === */
+const rsvpPopup = document.getElementById('rsvpPopup');
+const closeRsvpPopup = () => rsvpPopup.classList.add('hidden');
+document.getElementById('rsvpPopupClose').addEventListener('click', closeRsvpPopup);
+document.getElementById('rsvpPopupOk').addEventListener('click', closeRsvpPopup);
+rsvpPopup.addEventListener('click', (e) => { if (e.target === rsvpPopup) closeRsvpPopup(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeRsvpPopup(); });

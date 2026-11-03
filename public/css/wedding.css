@@ -1039,3 +1039,68 @@ section { padding: 6rem 2rem; }
 
   .bride-name, .groom-name { font-size: clamp(3.5rem, 18vw, 5.5rem); }
 }
+
+/* === RSVP CLOSED POPUP === */
+.rsvp-closed {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.4rem;
+}
+.rsvp-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(20, 4, 6, 0.65);
+}
+.rsvp-popup.hidden { display: none; }
+.rsvp-popup-card {
+  position: relative;
+  max-width: 440px;
+  width: 100%;
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  background: #FAF6EF;
+  border: 2px solid #D4A840;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+.rsvp-popup-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #8C1A22;
+  margin-bottom: 1rem;
+}
+.rsvp-popup-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #3E0C10;
+  margin-bottom: 1.75rem;
+}
+.rsvp-popup-btn {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.75rem 2.5rem;
+  border: none;
+  cursor: pointer;
+  color: #FAF6EF;
+  background: #8C1A22;
+}
+.rsvp-popup-btn:hover { background: #6E141B; }
+.rsvp-popup-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  border: none;
+  background: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #8C1A22;
+}
