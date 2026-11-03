@@ -83,6 +83,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
 app.post('/api/rsvp', async (req, res) => {
+  return res.status(403).json({ error: 'RSVPs are closed.' });
+
   const { name, email, phone, muhurtham, muhurthamGuests, reception, receptionGuests, notes, submissionId } = req.body;
   const event = req.body.event === 'reception' ? 'reception' : 'wedding';
 
